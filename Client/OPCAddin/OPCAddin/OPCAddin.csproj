@@ -23,6 +23,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <RegisterForComInterop>true</RegisterForComInterop>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -39,19 +40,19 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
-    <Reference Include="AddinExpress.MSO.2005" >
+    <Reference Include="AddinExpress.MSO.2005">
       <HintPath>C:\Program Files (x86)\Add-in Express\Add-in Express for .NET\Bin\AddinExpress.MSO.2005.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="Microsoft.Vbe.Interop.dll" >
+    <Reference Include="Microsoft.Vbe.Interop.dll">
       <HintPath>Interops\Microsoft.Vbe.Interop.dll</HintPath>
       <Private>True</Private>
     </Reference>
-	<Reference Include="Office.dll" >
+    <Reference Include="Office.dll">
       <HintPath>Interops\Office.dll</HintPath>
       <Private>True</Private>
     </Reference>
-	<Reference Include="Microsoft.Office.Interop.Outlook.dll" >
+    <Reference Include="Microsoft.Office.Interop.Outlook.dll">
       <HintPath>Interops\Microsoft.Office.Interop.Outlook.dll</HintPath>
       <Private>True</Private>
     </Reference>
@@ -72,5 +73,10 @@
       <DependentUpon>AddinModule.cs</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="AddinModule.resx">
+      <DependentUpon>AddinModule.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
 </Project>

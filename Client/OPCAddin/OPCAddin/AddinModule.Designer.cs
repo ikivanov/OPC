@@ -28,16 +28,23 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            //
+            this.opcRibbonTab = new AddinExpress.MSO.ADXRibbonTab(this.components);
+            // 
+            // opcRibbonTab
+            // 
+            this.opcRibbonTab.Caption = "OPC";
+            this.opcRibbonTab.Id = "adxRibbonTab_c02fca88250b44da9f36b9f16705c503";
+            this.opcRibbonTab.Ribbons = ((AddinExpress.MSO.ADXRibbons)((AddinExpress.MSO.ADXRibbons.msrOutlookTask | AddinExpress.MSO.ADXRibbons.msrOutlookExplorer)));
+            // 
             // AddinModule
-            //
+            // 
             this.AddinName = "OPCAddin";
-            
-            this.SupportedApps = ((AddinExpress.MSO.ADXOfficeHostApp)(
-				AddinExpress.MSO.ADXOfficeHostApp.ohaOutlook 
-				));
+            this.SupportedApps = AddinExpress.MSO.ADXOfficeHostApp.ohaOutlook;
+
         }
         #endregion
+
+        private AddinExpress.MSO.ADXRibbonTab opcRibbonTab;
     }
 }
 
