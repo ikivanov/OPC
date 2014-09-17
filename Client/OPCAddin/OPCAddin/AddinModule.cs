@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Windows.Forms;
 using AddinExpress.MSO;
 using Outlook = Microsoft.Office.Interop.Outlook;
+using System.Threading.Tasks;
 
 namespace OPCAddin
 {
@@ -65,6 +66,11 @@ namespace OPCAddin
             {
                 return (HostApplication as Outlook._Application);
             }
+        }
+
+        private async void btnCallService_OnClick(object sender, IRibbonControl control, bool pressed)
+        {
+            var userId = await BackendServiceProxy.Login("", "");
         }
 
     }
