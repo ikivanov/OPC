@@ -17,13 +17,17 @@ namespace OPCAddin
     public class LoginResult
     {
         public string UserToken { get; set; }
+
+        public string Msg { get; set; }
+
+        public bool Success { get; set; }
     }
 
     public class BackendServiceProxy
     {
         private const string serviceUrl = "";
 
-        public static async Task<string> Login(string username, string password)
+        public static async Task<LoginResult> Login(string username, string password)
         {
             using (var client = new HttpClient())
             {
@@ -36,8 +40,7 @@ namespace OPCAddin
                 var response = await client.PostAsJsonAsync("/api/login", credentials);
                 response.EnsureSuccessStatusCode();
 
-                var result = await response.Content.ReadAsAsync <LoginResult>();
-                return result.UserToken;
+                return await response.Content.ReadAsAsync <LoginResult>();
             }
         }
     }

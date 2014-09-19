@@ -24,8 +24,19 @@ namespace OPCAddin.UI
 
             try
             {
-                AddinModule.CurrentInstance.UserToken = await BackendServiceProxy.Login(username, password);
-                this.Close();
+                LoginResult result = await BackendServiceProxy.Login(username, password);
+
+                if (result.Success) 
+                {
+                    AddinModule.CurrentInstance.UserToken = result.UserToken;
+                    this.Close();
+                }
+                else
+                {
+                    MessageBox.Show(result.Msg);
+                }
+
+                
             }
             catch (Exception)
             {
