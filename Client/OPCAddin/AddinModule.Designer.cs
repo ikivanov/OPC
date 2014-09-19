@@ -30,7 +30,7 @@
             this.components = new System.ComponentModel.Container();
             this.opcRibbonTab = new AddinExpress.MSO.ADXRibbonTab(this.components);
             this.adxRibbonGroup1 = new AddinExpress.MSO.ADXRibbonGroup(this.components);
-            this.btnCallService = new AddinExpress.MSO.ADXRibbonButton(this.components);
+            this.btnLogin = new AddinExpress.MSO.ADXRibbonButton(this.components);
             // 
             // opcRibbonTab
             // 
@@ -41,20 +41,20 @@
             // 
             // adxRibbonGroup1
             // 
-            this.adxRibbonGroup1.Caption = "adxRibbonGroup1";
-            this.adxRibbonGroup1.Controls.Add(this.btnCallService);
+            this.adxRibbonGroup1.Caption = "General";
+            this.adxRibbonGroup1.Controls.Add(this.btnLogin);
             this.adxRibbonGroup1.Id = "adxRibbonGroup_95f1f164a1ca42d8b76f69e909d9ac61";
             this.adxRibbonGroup1.ImageTransparentColor = System.Drawing.Color.Transparent;
             this.adxRibbonGroup1.Ribbons = ((AddinExpress.MSO.ADXRibbons)((AddinExpress.MSO.ADXRibbons.msrOutlookTask | AddinExpress.MSO.ADXRibbons.msrOutlookExplorer)));
             // 
-            // btnCallService
+            // btnLogin
             // 
-            this.btnCallService.Caption = "Call Service";
-            this.btnCallService.Id = "adxRibbonButton_8b37be3448a14ba59dd3d8ceb5fd2bff";
-            this.btnCallService.ImageTransparentColor = System.Drawing.Color.Transparent;
-            this.btnCallService.Ribbons = ((AddinExpress.MSO.ADXRibbons)((AddinExpress.MSO.ADXRibbons.msrOutlookTask | AddinExpress.MSO.ADXRibbons.msrOutlookExplorer)));
-            this.btnCallService.Size = AddinExpress.MSO.ADXRibbonXControlSize.Large;
-            this.btnCallService.OnClick += new AddinExpress.MSO.ADXRibbonOnAction_EventHandler(this.btnCallService_OnClick);
+            this.btnLogin.Caption = "Login";
+            this.btnLogin.Id = "adxRibbonButton_8b37be3448a14ba59dd3d8ceb5fd2bff";
+            this.btnLogin.ImageTransparentColor = System.Drawing.Color.Transparent;
+            this.btnLogin.Ribbons = ((AddinExpress.MSO.ADXRibbons)((AddinExpress.MSO.ADXRibbons.msrOutlookTask | AddinExpress.MSO.ADXRibbons.msrOutlookExplorer)));
+            this.btnLogin.Size = AddinExpress.MSO.ADXRibbonXControlSize.Large;
+            this.btnLogin.OnClick += new AddinExpress.MSO.ADXRibbonOnAction_EventHandler(this.btnLogin_OnClick);
             // 
             // AddinModule
             // 
@@ -66,7 +66,7 @@
 
         private AddinExpress.MSO.ADXRibbonTab opcRibbonTab;
         private AddinExpress.MSO.ADXRibbonGroup adxRibbonGroup1;
-        private AddinExpress.MSO.ADXRibbonButton btnCallService;
+        private AddinExpress.MSO.ADXRibbonButton btnLogin;
     }
 }
 

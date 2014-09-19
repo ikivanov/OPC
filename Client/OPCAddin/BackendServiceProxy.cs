@@ -10,8 +10,13 @@ namespace OPCAddin
 {
     public class Credentials
     {
-        public string Usename {get; set;}
+        public string Username {get; set;}
         public string Password {get; set;}
+    }
+
+    public class LoginResult
+    {
+        public string UserToken { get; set; }
     }
 
     public class BackendServiceProxy
@@ -22,18 +27,17 @@ namespace OPCAddin
         {
             using (var client = new HttpClient())
             {
-                client.BaseAddress = new Uri("http://localhost:4321/");
+                client.BaseAddress = new Uri("http://localhost:1337/");
                 client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-                var credentials = new Credentials() { Usename = "ikivanov", Password = "123" };
+                var credentials = new Credentials() { Username = username, Password = password };
 
-                var response = await client.PostAsJsonAsync("login", credentials);
-                if (response.IsSuccessStatusCode)
-                {
-                }
+                var response = await client.PostAsJsonAsync("/api/login", credentials);
+                response.EnsureSuccessStatusCode();
 
-                return "";
+                var result = await response.Content.ReadAsAsync <LoginResult>();
+                return result.UserToken;
             }
         }
     }
