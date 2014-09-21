@@ -24,16 +24,22 @@ namespace OPCAddin.UI
 
             try
             {
-                LoginResult result = await BackendServiceProxy.Login(username, password);
+                LoginResult result = await BackendServiceProxy.Login(new Credentials { Username = username, Password = password });
 
                 if (result.Success) 
                 {
                     AddinModule.CurrentInstance.UserToken = result.UserToken;
-                    this.Close();
+                    this.Invoke((MethodInvoker)delegate
+                    {
+                        this.Close();
+                    });
                 }
                 else
                 {
-                    MessageBox.Show(result.Msg);
+                    this.Invoke((MethodInvoker)delegate
+                    {
+                        MessageBox.Show(result.Msg);
+                    }); 
                 }
 
                 

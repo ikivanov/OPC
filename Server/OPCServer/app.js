@@ -1,6 +1,7 @@
 ﻿var express = require('express');
 var routes = require('./routes');
 var user = require('./routes/user');
+var project = require('./routes/project');
 var http = require('http');
 var path = require('path');
 var bodyParser = require('body-parser');
@@ -30,10 +31,16 @@ app.use(express.static(path.join(__dirname, 'public')));
   //app.use(express.errorHandler());
 //}
 
+//hit on site root
 app.get('/', routes.index);
-//app.get('/users', user.list);
+
+//users related functionality
 app.post('/api/login', user.login);
 app.get('/api/logout', user.logout);
+
+//project related functionality
+app.put('/api/project', project.create);
+app.post('/api/project', project.update);
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log('OPC server listening on port ' + app.get('port'));

@@ -69,8 +69,8 @@
             // adxRibbonGroup2
             // 
             this.adxRibbonGroup2.Caption = "Actions";
-            this.adxRibbonGroup2.Controls.Add(this.btnNewTask);
             this.adxRibbonGroup2.Controls.Add(this.btnNewProject);
+            this.adxRibbonGroup2.Controls.Add(this.btnNewTask);
             this.adxRibbonGroup2.Controls.Add(this.btnNewContact);
             this.adxRibbonGroup2.Id = "adxRibbonGroup_7744f30276104f07b33b9a5d9db4c94e";
             this.adxRibbonGroup2.ImageTransparentColor = System.Drawing.Color.Transparent;

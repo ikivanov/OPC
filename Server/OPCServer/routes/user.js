@@ -12,6 +12,14 @@ exports.list = function(req, res){
 
 var loggedUsers = {};
 
+exports.isValidUserToken = function (userToken) {
+    if (!userToken) {
+        return false;
+    }
+
+    return loggedUsers[userToken] !== undefined;
+}
+
 exports.login = function (req, res) {
     var username = req.body.Username;
     var password = req.body.Password;
@@ -32,7 +40,7 @@ exports.login = function (req, res) {
             } else {
                 res.send({
                     success : false, 
-                    msg: "Authentication failed! Bad username or password"
+                    msg: "Authentication failed! Bad username or password."
                 });
             }
             
