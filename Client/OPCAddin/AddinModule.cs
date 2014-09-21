@@ -77,6 +77,30 @@ namespace OPCAddin
             form.ShowDialog();
         }
 
+        private void btnNewProject_OnClick(object sender, IRibbonControl control, bool pressed)
+        {
+            ProjectItemForm form = new ProjectItemForm();
+            form.Show();
+        }
+
+        private void btnNewTask_OnClick(object sender, IRibbonControl control, bool pressed)
+        {
+            Outlook.Application app = new Outlook.Application();
+            Outlook.TaskItem task = (Outlook.TaskItem) app.CreateItem(Outlook.OlItemType.olTaskItem);
+            task.Display();
+
+            //TODO: open New Task Dialog of Outlook
+            //Set some additional buttons, panels, ribons in it
+            //On save, save it to Mongo if appropriate
+        }
+
+        private void btnNewContact_OnClick(object sender, IRibbonControl control, bool pressed)
+        {
+            Outlook.Application app = new Outlook.Application();
+            Outlook.ContactItem contact = (Outlook.ContactItem)app.CreateItem(Outlook.OlItemType.olContactItem);
+            contact.Display();
+        }
+
     }
 }
 
