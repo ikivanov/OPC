@@ -28,18 +28,20 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AddinModule));
             this.opcRibbonTab = new AddinExpress.MSO.ADXRibbonTab(this.components);
             this.adxRibbonGroup1 = new AddinExpress.MSO.ADXRibbonGroup(this.components);
             this.btnLogin = new AddinExpress.MSO.ADXRibbonButton(this.components);
             this.adxRibbonGroup2 = new AddinExpress.MSO.ADXRibbonGroup(this.components);
-            this.btnNewTask = new AddinExpress.MSO.ADXRibbonButton(this.components);
             this.btnNewProject = new AddinExpress.MSO.ADXRibbonButton(this.components);
+            this.btnNewTask = new AddinExpress.MSO.ADXRibbonButton(this.components);
+            this.btnNewContact = new AddinExpress.MSO.ADXRibbonButton(this.components);
             this.formsManager = new AddinExpress.OL.ADXOlFormsManager(this.components);
             this.adxOlFormsCollectionItem1 = new AddinExpress.OL.ADXOlFormsCollectionItem(this.components);
             this.adxContextMenu1 = new AddinExpress.MSO.ADXContextMenu(this.components);
             this.adxCommandBarButton1 = new AddinExpress.MSO.ADXCommandBarButton(this.components);
             this.adxRibbonButton1 = new AddinExpress.MSO.ADXRibbonButton(this.components);
-            this.btnNewContact = new AddinExpress.MSO.ADXRibbonButton(this.components);
+            this.imageList1 = new System.Windows.Forms.ImageList(this.components);
             // 
             // opcRibbonTab
             // 
@@ -61,6 +63,8 @@
             // 
             this.btnLogin.Caption = "Login";
             this.btnLogin.Id = "adxRibbonButton_8b37be3448a14ba59dd3d8ceb5fd2bff";
+            this.btnLogin.Image = 0;
+            this.btnLogin.ImageList = this.imageList1;
             this.btnLogin.ImageTransparentColor = System.Drawing.Color.Transparent;
             this.btnLogin.Ribbons = ((AddinExpress.MSO.ADXRibbons)((AddinExpress.MSO.ADXRibbons.msrOutlookTask | AddinExpress.MSO.ADXRibbons.msrOutlookExplorer)));
             this.btnLogin.Size = AddinExpress.MSO.ADXRibbonXControlSize.Large;
@@ -76,23 +80,38 @@
             this.adxRibbonGroup2.ImageTransparentColor = System.Drawing.Color.Transparent;
             this.adxRibbonGroup2.Ribbons = ((AddinExpress.MSO.ADXRibbons)((AddinExpress.MSO.ADXRibbons.msrOutlookTask | AddinExpress.MSO.ADXRibbons.msrOutlookExplorer)));
             // 
+            // btnNewProject
+            // 
+            this.btnNewProject.Caption = "New Project";
+            this.btnNewProject.Id = "adxRibbonButton_cc91ed65db3840ab838b6faceeb5b38c";
+            this.btnNewProject.Image = 3;
+            this.btnNewProject.ImageList = this.imageList1;
+            this.btnNewProject.ImageTransparentColor = System.Drawing.Color.Transparent;
+            this.btnNewProject.Ribbons = ((AddinExpress.MSO.ADXRibbons)((AddinExpress.MSO.ADXRibbons.msrOutlookTask | AddinExpress.MSO.ADXRibbons.msrOutlookExplorer)));
+            this.btnNewProject.Size = AddinExpress.MSO.ADXRibbonXControlSize.Large;
+            this.btnNewProject.OnClick += new AddinExpress.MSO.ADXRibbonOnAction_EventHandler(this.btnNewProject_OnClick);
+            // 
             // btnNewTask
             // 
             this.btnNewTask.Caption = "New Task";
             this.btnNewTask.Id = "adxRibbonButton_a5993cf3eb924d788b15d71b20d6d5cb";
+            this.btnNewTask.Image = 1;
+            this.btnNewTask.ImageList = this.imageList1;
             this.btnNewTask.ImageTransparentColor = System.Drawing.Color.Transparent;
             this.btnNewTask.Ribbons = ((AddinExpress.MSO.ADXRibbons)((AddinExpress.MSO.ADXRibbons.msrOutlookTask | AddinExpress.MSO.ADXRibbons.msrOutlookExplorer)));
             this.btnNewTask.Size = AddinExpress.MSO.ADXRibbonXControlSize.Large;
             this.btnNewTask.OnClick += new AddinExpress.MSO.ADXRibbonOnAction_EventHandler(this.btnNewTask_OnClick);
             // 
-            // btnNewProject
+            // btnNewContact
             // 
-            this.btnNewProject.Caption = "New Project";
-            this.btnNewProject.Id = "adxRibbonButton_cc91ed65db3840ab838b6faceeb5b38c";
-            this.btnNewProject.ImageTransparentColor = System.Drawing.Color.Transparent;
-            this.btnNewProject.Ribbons = ((AddinExpress.MSO.ADXRibbons)((AddinExpress.MSO.ADXRibbons.msrOutlookTask | AddinExpress.MSO.ADXRibbons.msrOutlookExplorer)));
-            this.btnNewProject.Size = AddinExpress.MSO.ADXRibbonXControlSize.Large;
-            this.btnNewProject.OnClick += new AddinExpress.MSO.ADXRibbonOnAction_EventHandler(this.btnNewProject_OnClick);
+            this.btnNewContact.Caption = "New Contact";
+            this.btnNewContact.Id = "adxRibbonButton_c4ed7dc3b73f4558ab38b81b41dfb195";
+            this.btnNewContact.Image = 2;
+            this.btnNewContact.ImageList = this.imageList1;
+            this.btnNewContact.ImageTransparentColor = System.Drawing.Color.Transparent;
+            this.btnNewContact.Ribbons = ((AddinExpress.MSO.ADXRibbons)((AddinExpress.MSO.ADXRibbons.msrOutlookTask | AddinExpress.MSO.ADXRibbons.msrOutlookExplorer)));
+            this.btnNewContact.Size = AddinExpress.MSO.ADXRibbonXControlSize.Large;
+            this.btnNewContact.OnClick += new AddinExpress.MSO.ADXRibbonOnAction_EventHandler(this.btnNewContact_OnClick);
             // 
             // formsManager
             // 
@@ -135,14 +154,14 @@
             this.adxRibbonButton1.ImageTransparentColor = System.Drawing.Color.Transparent;
             this.adxRibbonButton1.Ribbons = ((AddinExpress.MSO.ADXRibbons)((AddinExpress.MSO.ADXRibbons.msrOutlookTask | AddinExpress.MSO.ADXRibbons.msrOutlookExplorer)));
             // 
-            // btnNewContact
+            // imageList1
             // 
-            this.btnNewContact.Caption = "New Contact";
-            this.btnNewContact.Id = "adxRibbonButton_c4ed7dc3b73f4558ab38b81b41dfb195";
-            this.btnNewContact.ImageTransparentColor = System.Drawing.Color.Transparent;
-            this.btnNewContact.Ribbons = ((AddinExpress.MSO.ADXRibbons)((AddinExpress.MSO.ADXRibbons.msrOutlookTask | AddinExpress.MSO.ADXRibbons.msrOutlookExplorer)));
-            this.btnNewContact.Size = AddinExpress.MSO.ADXRibbonXControlSize.Large;
-            this.btnNewContact.OnClick += new AddinExpress.MSO.ADXRibbonOnAction_EventHandler(this.btnNewContact_OnClick);
+            this.imageList1.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageList1.ImageStream")));
+            this.imageList1.TransparentColor = System.Drawing.Color.Transparent;
+            this.imageList1.Images.SetKeyName(0, "login.png");
+            this.imageList1.Images.SetKeyName(1, "Task.png");
+            this.imageList1.Images.SetKeyName(2, "Contact.png");
+            this.imageList1.Images.SetKeyName(3, "Document.png");
             // 
             // AddinModule
             // 
@@ -164,6 +183,7 @@
         private AddinExpress.MSO.ADXRibbonGroup adxRibbonGroup2;
         private AddinExpress.MSO.ADXRibbonButton adxRibbonButton1;
         private AddinExpress.MSO.ADXRibbonButton btnNewContact;
+        private System.Windows.Forms.ImageList imageList1;
     }
 }
 

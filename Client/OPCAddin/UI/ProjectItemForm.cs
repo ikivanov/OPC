@@ -182,5 +182,10 @@ namespace OPCAddin.UI
             cboCategory.SelectedIndex = 0;
             cboProjectManager.SelectedIndex = 0;
         }
+
+        private void btnCreateTask_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
+        {
+            //TODO:
+        }
     }
 }
