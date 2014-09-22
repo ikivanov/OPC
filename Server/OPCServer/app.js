@@ -41,6 +41,8 @@ app.get('/api/logout', user.logout);
 //project related functionality
 app.put('/api/project', project.create);
 app.post('/api/project', project.update);
+app.delete('/api/:userToken/project/:id', project.delete);
+
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log('OPC server listening on port ' + app.get('port'));

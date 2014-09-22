@@ -33,6 +33,8 @@ namespace OPCAddin.UI
                     this.project.Name = txtProjectName.Text;
                     this.project.InternalCode = txtInternalCode.Text;
                     this.project.Description = rtbDescription.Text;
+                    this.project.Start = dtpStart.Value;
+                    this.project.End = dtpEnd.Value;
                 });
 
                 return this.project;
@@ -128,15 +130,57 @@ namespace OPCAddin.UI
             this.Save();
         }
 
-        private void btnDelete_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
+        private async void btnDelete_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
-            //TODO:
-            this.Close();
+            var res = MessageBox.Show("Sind Sie sicher dass Sie das Projekt löschen wollen?",
+                   "Outlook Project Cloud",
+                   MessageBoxButtons.YesNo);
+            if (res != System.Windows.Forms.DialogResult.Yes)
+            {
+                return;
+            }
+
+            if (this.Project.IsInsering())
+            {
+                this.Close();
+                return;
+            }
+
+            try
+            {
+                var userToken = AddinModule.CurrentInstance.UserToken;
+                var result = await BackendServiceProxy.DeleteProject(userToken, this.Project);
+
+                if (result.Success)
+                {
+                    this.Invoke((MethodInvoker)delegate
+                    {
+                        this.Close();
+                    });
+                }
+                else
+                {
+                    this.Invoke((MethodInvoker)delegate
+                    {
+                        MessageBox.Show(result.Msg);
+                    });
+                }
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("An error occured while deleting project");
+            }
         }
 
         private void ribbonControl1_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void ProjectItemForm_Load(object sender, EventArgs e)
+        {
+            cboCategory.SelectedIndex = 0;
+            cboProjectManager.SelectedIndex = 0;
         }
     }
 }

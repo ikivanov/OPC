@@ -37,6 +37,7 @@
             this.btnDocuments = new DevExpress.XtraBars.BarButtonItem();
             this.barButtonItem2 = new DevExpress.XtraBars.BarButtonItem();
             this.barButtonItem3 = new DevExpress.XtraBars.BarButtonItem();
+            this.btnSave = new DevExpress.XtraBars.BarButtonItem();
             this.ribbonPage1 = new DevExpress.XtraBars.Ribbon.RibbonPage();
             this.ribbonPageGroup1 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             this.ribbonPageGroup2 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
@@ -64,7 +65,6 @@
             this.cboProjectManager = new System.Windows.Forms.ComboBox();
             this.lbTeamMembers = new System.Windows.Forms.ListBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.btnSave = new DevExpress.XtraBars.BarButtonItem();
             ((System.ComponentModel.ISupportInitialize)(this.ribbonControl1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -149,6 +149,15 @@
             this.barButtonItem3.Id = 15;
             this.barButtonItem3.Name = "barButtonItem3";
             this.barButtonItem3.RibbonStyle = DevExpress.XtraBars.Ribbon.RibbonItemStyles.Large;
+            // 
+            // btnSave
+            // 
+            this.btnSave.Caption = "Speichern";
+            this.btnSave.CategoryGuid = new System.Guid("6ffddb2b-9015-4d97-a4c1-91613e0ef537");
+            this.btnSave.Id = 16;
+            this.btnSave.Name = "btnSave";
+            this.btnSave.RibbonStyle = DevExpress.XtraBars.Ribbon.RibbonItemStyles.Large;
+            this.btnSave.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnSave_ItemClick);
             // 
             // ribbonPage1
             // 
@@ -348,6 +357,8 @@
             // checkBox1
             // 
             this.checkBox1.AutoSize = true;
+            this.checkBox1.Checked = true;
+            this.checkBox1.CheckState = System.Windows.Forms.CheckState.Checked;
             this.checkBox1.Location = new System.Drawing.Point(101, 425);
             this.checkBox1.Name = "checkBox1";
             this.checkBox1.Size = new System.Drawing.Size(52, 17);
@@ -366,6 +377,10 @@
             // 
             this.cboProjectManager.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboProjectManager.FormattingEnabled = true;
+            this.cboProjectManager.Items.AddRange(new object[] {
+            "cbr",
+            "ikivanov",
+            "strom"});
             this.cboProjectManager.Location = new System.Drawing.Point(473, 155);
             this.cboProjectManager.Name = "cboProjectManager";
             this.cboProjectManager.Size = new System.Drawing.Size(185, 21);
@@ -374,6 +389,13 @@
             // lbTeamMembers
             // 
             this.lbTeamMembers.FormattingEnabled = true;
+            this.lbTeamMembers.Items.AddRange(new object[] {
+            "brueckner",
+            "ikivanov",
+            "tommas",
+            "milde",
+            "meinholz",
+            "gilner"});
             this.lbTeamMembers.Location = new System.Drawing.Point(473, 189);
             this.lbTeamMembers.Name = "lbTeamMembers";
             this.lbTeamMembers.Size = new System.Drawing.Size(185, 121);
@@ -387,15 +409,6 @@
             this.label1.Size = new System.Drawing.Size(66, 13);
             this.label1.TabIndex = 26;
             this.label1.Text = "Projektname";
-            // 
-            // btnSave
-            // 
-            this.btnSave.Caption = "Speichern";
-            this.btnSave.CategoryGuid = new System.Guid("6ffddb2b-9015-4d97-a4c1-91613e0ef537");
-            this.btnSave.Id = 16;
-            this.btnSave.Name = "btnSave";
-            this.btnSave.RibbonStyle = DevExpress.XtraBars.Ribbon.RibbonItemStyles.Large;
-            this.btnSave.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnSave_ItemClick);
             // 
             // ProjectItemForm
             // 
@@ -429,6 +442,7 @@
             this.Name = "ProjectItemForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Projekt";
+            this.Load += new System.EventHandler(this.ProjectItemForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.ribbonControl1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
