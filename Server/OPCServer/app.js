@@ -1,7 +1,8 @@
 ﻿var express = require('express');
 var routes = require('./routes');
-var user = require('./routes/user');
-var project = require('./routes/project');
+var user = require('./api/user');
+var project = require('./api/project');
+var task = require('./api/task');
 var http = require('http');
 var path = require('path');
 var bodyParser = require('body-parser');
@@ -42,6 +43,11 @@ app.get('/api/logout', user.logout);
 app.put('/api/project', project.create);
 app.post('/api/project', project.update);
 app.delete('/api/:userToken/project/:id', project.delete);
+app.get('/api/:userToken/projects', project.getAll);
+app.get('/api/:userToken/project/:id', project.getById);
+
+//task related functionality
+app.put('/api/task', task.create);
 
 
 http.createServer(app).listen(app.get('port'), function(){

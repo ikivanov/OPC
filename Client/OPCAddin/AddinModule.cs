@@ -83,15 +83,75 @@ namespace OPCAddin
             form.Show();
         }
 
+        private Outlook.TaskItem task = null;
         private void btnNewTask_OnClick(object sender, IRibbonControl control, bool pressed)
         {
             Outlook.Application app = new Outlook.Application();
-            Outlook.TaskItem task = (Outlook.TaskItem) app.CreateItem(Outlook.OlItemType.olTaskItem);
-            task.Display();
+            this.task = (Outlook.TaskItem) app.CreateItem(Outlook.OlItemType.olTaskItem);
+            this.task.Display();
+            this.task.Write += task_Write;
 
             //TODO: open New Task Dialog of Outlook
             //Set some additional buttons, panels, ribons in it
             //On save, save it to Mongo if appropriate
+        }
+
+        const int TASK_EXTENSION_FORM_INDEX = 0;
+
+        void task_Write(ref bool Cancel)
+        {
+            var  taskExtensionForm = this.formsManager.Items[TASK_EXTENSION_FORM_INDEX].GetCurrentForm() as TaskExtensionForm;
+            string projectId = string.Empty;
+
+            if (taskExtensionForm != null)
+            {
+                projectId = taskExtensionForm.GetFormData();
+            }
+
+            var task = new TaskItem
+            {
+                Subject = this.task.Subject,
+                StartDate = this.task.StartDate,
+                DueDate = this.task.DueDate,
+                Status = (int)this.task.Status,
+                SchedulePlusPriority = this.task.SchedulePlusPriority,
+                PercentComplete = this.task.PercentComplete,
+                Body = this.task.Body,
+                ProjectId = projectId
+            };
+            this.CreateTaskOnServer(task);
+        }
+
+        private async void CreateTaskOnServer(TaskItem task)
+        {
+            try
+            {
+                var userToken = AddinModule.CurrentInstance.UserToken;
+                var result = await BackendServiceProxy.CreateTask(userToken, task);
+
+                if (result.Success)
+                {
+                    //this.Project.Id = result.ProjectId;
+                    //if (shouldClose)
+                    //{
+                    //    this.Invoke((MethodInvoker)delegate
+                    //    {
+                    //        this.Close();
+                    //    });
+                    //}
+                }
+                else
+                {
+                    //this.Invoke((MethodInvoker)delegate
+                    //{
+                    MessageBox.Show(result.Msg);
+                    //});
+                }
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("An error occured while creating task");
+            }
         }
 
         private void btnNewContact_OnClick(object sender, IRibbonControl control, bool pressed)

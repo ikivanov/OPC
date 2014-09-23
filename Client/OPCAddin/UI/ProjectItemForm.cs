@@ -33,8 +33,8 @@ namespace OPCAddin.UI
                     this.project.Name = txtProjectName.Text;
                     this.project.InternalCode = txtInternalCode.Text;
                     this.project.Description = rtbDescription.Text;
-                    this.project.Start = dtpStart.Value;
-                    this.project.End = dtpEnd.Value;
+                    //this.project.Start = dtpStart.Value;
+                    //this.project.End = dtpEnd.Value;
                 });
 
                 return this.project;

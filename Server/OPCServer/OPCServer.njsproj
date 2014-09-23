@@ -30,10 +30,12 @@
     <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="api\task.js" />
+    <Compile Include="api\utils.js" />
     <Compile Include="app.js" />
     <Compile Include="routes\index.js" />
-    <Compile Include="routes\project.js" />
-    <Compile Include="routes\user.js" />
+    <Compile Include="api\project.js" />
+    <Compile Include="api\user.js" />
     <Content Include="package.json" />
     <Content Include="public\stylesheets\style.styl" />
     <Content Include="README.md" />
@@ -41,6 +43,7 @@
     <Content Include="views\layout.jade" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="api\" />
     <Folder Include="public\" />
     <Folder Include="public\images\" />
     <Folder Include="public\javascripts\" />
