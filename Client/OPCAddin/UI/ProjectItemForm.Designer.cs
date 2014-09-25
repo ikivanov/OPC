@@ -44,12 +44,8 @@
             this.ribbonPageGroup2 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             this.ribbonPageGroup3 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             this.label10 = new System.Windows.Forms.Label();
-            this.label12 = new System.Windows.Forms.Label();
             this.cboCategory = new System.Windows.Forms.ComboBox();
             this.label11 = new System.Windows.Forms.Label();
-            this.button2 = new System.Windows.Forms.Button();
-            this.label9 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.rtbDescription = new System.Windows.Forms.RichTextBox();
@@ -60,7 +56,6 @@
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.dtpStart = new System.Windows.Forms.DateTimePicker();
-            this.button1 = new System.Windows.Forms.Button();
             this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.txtProjectName = new System.Windows.Forms.TextBox();
             this.cboProjectManager = new System.Windows.Forms.ComboBox();
@@ -88,7 +83,7 @@
             this.ribbonControl1.Name = "ribbonControl1";
             this.ribbonControl1.Pages.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPage[] {
             this.ribbonPage1});
-            this.ribbonControl1.Size = new System.Drawing.Size(778, 142);
+            this.ribbonControl1.Size = new System.Drawing.Size(689, 142);
             this.ribbonControl1.Click += new System.EventHandler(this.ribbonControl1_Click);
             // 
             // barButtonItem1
@@ -118,10 +113,11 @@
             // 
             // btnGantt
             // 
-            this.btnGantt.Caption = "Ganttdiagramme";
+            this.btnGantt.Caption = "Projektplan";
             this.btnGantt.Id = 7;
             this.btnGantt.Name = "btnGantt";
             this.btnGantt.RibbonStyle = DevExpress.XtraBars.Ribbon.RibbonItemStyles.Large;
+            this.btnGantt.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnGantt_ItemClick);
             // 
             // barButtonItem5
             // 
@@ -205,24 +201,21 @@
             this.label10.TabIndex = 48;
             this.label10.Text = "Verbindung";
             // 
-            // label12
-            // 
-            this.label12.AutoSize = true;
-            this.label12.ForeColor = System.Drawing.Color.Red;
-            this.label12.Location = new System.Drawing.Point(292, 214);
-            this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(49, 13);
-            this.label12.TabIndex = 47;
-            this.label12.Text = "(fake list)";
-            // 
             // cboCategory
             // 
             this.cboCategory.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboCategory.FormattingEnabled = true;
             this.cboCategory.Items.AddRange(new object[] {
-            "Kategorie 1",
-            "Kategorie 2",
-            "Kategorie 3"});
+            "FLE Mode Messe",
+            "KCL Kids Collections",
+            "DPA Dessous Paradies",
+            "STI Shoe Time",
+            "Sales Event",
+            "Sales Lekkerland",
+            "Sales Telekom",
+            "EDV Daten-Telefon",
+            "Mieter Rundschreiben",
+            "MIeter Neuakquise Firma xy"});
             this.cboCategory.Location = new System.Drawing.Point(101, 211);
             this.cboCategory.Name = "cboCategory";
             this.cboCategory.Size = new System.Drawing.Size(185, 21);
@@ -236,35 +229,6 @@
             this.label11.Size = new System.Drawing.Size(52, 13);
             this.label11.TabIndex = 45;
             this.label11.Text = "Kategorie";
-            // 
-            // button2
-            // 
-            this.button2.Location = new System.Drawing.Point(712, 189);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(33, 23);
-            this.button2.TabIndex = 44;
-            this.button2.Text = "-";
-            this.button2.UseVisualStyleBackColor = true;
-            // 
-            // label9
-            // 
-            this.label9.AutoSize = true;
-            this.label9.ForeColor = System.Drawing.Color.Red;
-            this.label9.Location = new System.Drawing.Point(663, 158);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(49, 13);
-            this.label9.TabIndex = 43;
-            this.label9.Text = "(fake list)";
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.ForeColor = System.Drawing.Color.Red;
-            this.label4.Location = new System.Drawing.Point(669, 219);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(49, 13);
-            this.label4.TabIndex = 34;
-            this.label4.Text = "(fake list)";
             // 
             // label8
             // 
@@ -351,15 +315,6 @@
             this.dtpStart.TabIndex = 32;
             this.dtpStart.Value = new System.DateTime(2014, 9, 21, 16, 10, 36, 0);
             // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(673, 189);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(33, 23);
-            this.button1.TabIndex = 31;
-            this.button1.Text = "+";
-            this.button1.UseVisualStyleBackColor = true;
-            // 
             // checkBox1
             // 
             this.checkBox1.AutoSize = true;
@@ -384,9 +339,31 @@
             this.cboProjectManager.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboProjectManager.FormattingEnabled = true;
             this.cboProjectManager.Items.AddRange(new object[] {
-            "cbr",
-            "ikivanov",
-            "strom"});
+            "Montag, Markus",
+            "Gille, Tanja",
+            "Scholz, Jana",
+            "Buchhorn, Stefanie",
+            "Holzweißig, Sylvia",
+            "Vogel, Claudia",
+            "Auszubildende",
+            "Rostin, Claudia",
+            "Schumann, Katja",
+            "Reuter, Antje",
+            "Martin, Elisabeth",
+            "Kramer Luise",
+            "Schedukat, Jana",
+            "Richter, Sandra",
+            "Regehr, Annett",
+            "Rasche, Stephan",
+            "Mischke, Sandra",
+            "Schlage, Mariana",
+            "Otte, Doreen",
+            "Tennhardt, Nicole",
+            "Jäger-Alt, Sandra",
+            "Auszubildende",
+            "Heinze, Loreen",
+            "Warg, Julie",
+            "Jurack, Catrin"});
             this.cboProjectManager.Location = new System.Drawing.Point(473, 155);
             this.cboProjectManager.Name = "cboProjectManager";
             this.cboProjectManager.Size = new System.Drawing.Size(185, 21);
@@ -396,12 +373,31 @@
             // 
             this.lbTeamMembers.FormattingEnabled = true;
             this.lbTeamMembers.Items.AddRange(new object[] {
-            "brueckner",
-            "ikivanov",
-            "tommas",
-            "milde",
-            "meinholz",
-            "gilner"});
+            "Montag, Markus",
+            "Gille, Tanja",
+            "Scholz, Jana",
+            "Buchhorn, Stefanie",
+            "Holzweißig, Sylvia",
+            "Vogel, Claudia",
+            "Auszubildende",
+            "Rostin, Claudia",
+            "Schumann, Katja",
+            "Reuter, Antje",
+            "Martin, Elisabeth",
+            "Kramer Luise",
+            "Schedukat, Jana",
+            "Richter, Sandra",
+            "Regehr, Annett",
+            "Rasche, Stephan",
+            "Mischke, Sandra",
+            "Schlage, Mariana",
+            "Otte, Doreen",
+            "Tennhardt, Nicole",
+            "Jäger-Alt, Sandra",
+            "Auszubildende",
+            "Heinze, Loreen",
+            "Warg, Julie",
+            "Jurack, Catrin"});
             this.lbTeamMembers.Location = new System.Drawing.Point(473, 189);
             this.lbTeamMembers.Name = "lbTeamMembers";
             this.lbTeamMembers.Size = new System.Drawing.Size(185, 121);
@@ -420,14 +416,10 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(778, 465);
+            this.ClientSize = new System.Drawing.Size(689, 465);
             this.Controls.Add(this.label10);
-            this.Controls.Add(this.label12);
             this.Controls.Add(this.cboCategory);
             this.Controls.Add(this.label11);
-            this.Controls.Add(this.button2);
-            this.Controls.Add(this.label9);
-            this.Controls.Add(this.label4);
             this.Controls.Add(this.label8);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.rtbDescription);
@@ -438,7 +430,6 @@
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.dtpStart);
-            this.Controls.Add(this.button1);
             this.Controls.Add(this.checkBox1);
             this.Controls.Add(this.txtProjectName);
             this.Controls.Add(this.cboProjectManager);
@@ -469,12 +460,8 @@
         private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonPageGroup2;
         private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonPageGroup3;
         private System.Windows.Forms.Label label10;
-        private System.Windows.Forms.Label label12;
         private System.Windows.Forms.ComboBox cboCategory;
         private System.Windows.Forms.Label label11;
-        private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.RichTextBox rtbDescription;
@@ -485,7 +472,6 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.DateTimePicker dtpStart;
-        private System.Windows.Forms.Button button1;
         private System.Windows.Forms.CheckBox checkBox1;
         private System.Windows.Forms.TextBox txtProjectName;
         private System.Windows.Forms.ComboBox cboProjectManager;

@@ -187,5 +187,11 @@ namespace OPCAddin.UI
         {
             //TODO:
         }
+
+        private void btnGantt_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
+        {
+            ProjectPlanForm form = new ProjectPlanForm();
+            form.ShowDialog();
+        }
     }
 }

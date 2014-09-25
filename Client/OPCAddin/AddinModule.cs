@@ -161,6 +161,12 @@ namespace OPCAddin
             contact.Display();
         }
 
+        private void btnGanttChart_OnClick(object sender, IRibbonControl control, bool pressed)
+        {
+            ProjectPlanForm form = new ProjectPlanForm();
+            form.ShowDialog();
+        }
+
     }
 }
 
