@@ -22,7 +22,7 @@ namespace OPCAddin.UI
         {
             var result = new List<ProjectItem>();
 
-            ProjectItem proj = new ProjectItem();
+            var proj = new ProjectItem();
 
             proj.Name = "Project1";
             proj.Description = "Proj1 Description";
@@ -31,6 +31,18 @@ namespace OPCAddin.UI
             proj.Tasks = new List<TaskItem>();
             proj.Tasks.Add(new TaskItem { Subject = "Task1", StartDate = new DateTime(2014, 9, 5), DueDate = new DateTime(2014, 9, 7) });
             proj.Tasks.Add(new TaskItem { Subject = "Task2", StartDate = new DateTime(2014, 9, 7), DueDate = new DateTime(2014, 9, 9) });
+
+            result.Add(proj);
+
+            proj = new ProjectItem();
+
+            proj.Name = "Project2";
+            proj.Description = "Proj2 Description";
+            proj.Start = new DateTime(2014, 9, 1);
+            proj.End = new DateTime(2014, 11, 1);
+            proj.Tasks = new List<TaskItem>();
+            proj.Tasks.Add(new TaskItem { Subject = "Task1", StartDate = new DateTime(2014, 9, 10), DueDate = new DateTime(2014, 9, 15) });
+            proj.Tasks.Add(new TaskItem { Subject = "Task2", StartDate = new DateTime(2014, 9, 7), DueDate = new DateTime(2014, 9, 27) });
 
             result.Add(proj);
 
@@ -45,13 +57,18 @@ namespace OPCAddin.UI
             return new DateTime(int.Parse(sA[2]), int.Parse(sA[0]), int.Parse(sA[1]));
         }
 
-        private void SetupGantt2()
+        private void SetupGantt2(List<ProjectItem> projects)
         {
             exg2antt1.BeginUpdate();
+
             exg2antt1.MarkSearchColumn = false;
             exg2antt1.ShowFocusRect = false;
             exg2antt1.OnResizeControl = exontrol.EXG2ANTTLib.OnResizeControlEnum.exResizeChart;
-            (exg2antt1.Columns.Add("Tasks") as exontrol.EXG2ANTTLib.Column).AllowDragging = false;
+
+            //Columns Definition
+
+            (exg2antt1.Columns.Add("Name") as exontrol.EXG2ANTTLib.Column).AllowDragging = false;
+
             exontrol.EXG2ANTTLib.Column var_Column = (exg2antt1.Columns.Add("Histogram") as exontrol.EXG2ANTTLib.Column);
             var_Column.AllowDragging = false;
             var_Column.set_Def(exontrol.EXG2ANTTLib.DefColumnEnum.exCellHasCheckBox, true);
@@ -60,80 +77,146 @@ namespace OPCAddin.UI
             var_Column.Width = 18;
             var_Column.LevelKey = 1;
             exg2antt1.Items.AllowCellValueToItemBar = true;
-            exontrol.EXG2ANTTLib.Column var_Column1 = (exg2antt1.Columns.Add("Effort") as exontrol.EXG2ANTTLib.Column);
-            var_Column1.LevelKey = 1;
-            var_Column1.AllowDragging = false;
-            var_Column1.AllowSizing = false;
-            var_Column1.Width = 64;
-            var_Column1.set_Def(exontrol.EXG2ANTTLib.DefColumnEnum.exCellValueToItemBarProperty, 21);
-            exontrol.EXG2ANTTLib.Editor var_Editor = var_Column1.Editor;
+
+            var colStart = (exg2antt1.Columns.Add("Start") as exontrol.EXG2ANTTLib.Column);
+            colStart.set_Def(exontrol.EXG2ANTTLib.DefColumnEnum.exCellValueToItemBarProperty, exontrol.EXG2ANTTLib.ItemBarPropertyEnum.exBarStart);
+            colStart.Editor.EditType = exontrol.EXG2ANTTLib.EditTypeEnum.DateType;
+
+            var colEnd = (exg2antt1.Columns.Add("End") as exontrol.EXG2ANTTLib.Column);
+            colEnd.set_Def(exontrol.EXG2ANTTLib.DefColumnEnum.exCellValueToItemBarProperty, exontrol.EXG2ANTTLib.ItemBarPropertyEnum.exBarEnd);
+            colEnd.Editor.EditType = exontrol.EXG2ANTTLib.EditTypeEnum.DateType;
+
+            //var colDescription = (exg2antt1.Columns.Add("Beschreibung") as exontrol.EXG2ANTTLib.Column);
+            //colDescription.AllowDragging = false;
+            //colDescription.Editor.EditType = exontrol.EXG2ANTTLib.EditTypeEnum.MemoDropDownType;
+
+            //var colStatus = (exg2antt1.Columns.Add("Status") as exontrol.EXG2ANTTLib.Column);
+            //colStatus.AllowDragging = false;
+            //var statusEditor = colStatus.Editor;
+            //statusEditor.EditType = exontrol.EXG2ANTTLib.EditTypeEnum.DropDownListType;
+
+            //var colPriority = (exg2antt1.Columns.Add("Priorität") as exontrol.EXG2ANTTLib.Column);
+            //colPriority.AllowDragging = false;
+            //var priorityEditor = colPriority.Editor;
+            //priorityEditor.EditType = exontrol.EXG2ANTTLib.EditTypeEnum.DropDownListType;
+
+            //var colComplete = (exg2antt1.Columns.Add("Fortschritt") as exontrol.EXG2ANTTLib.Column);
+            //colComplete.Width = 64;
+            //colComplete.AllowDragging = false;
+            //var completeEditor = colComplete.Editor;
+            //completeEditor.EditType = exontrol.EXG2ANTTLib.EditTypeEnum.SliderType;
+            //completeEditor.set_Option(exontrol.EXG2ANTTLib.EditorOptionEnum.exSliderMax, 100);
+            //completeEditor.set_Option(exontrol.EXG2ANTTLib.EditorOptionEnum.exSliderMin, 0);
+
+            //var ownerCol = (exg2antt1.Columns.Add("Benutzer") as exontrol.EXG2ANTTLib.Column);
+            //ownerCol.AllowDragging = false;
+            //var ownerEditor = ownerCol.Editor;
+            //ownerEditor.EditType = exontrol.EXG2ANTTLib.EditTypeEnum.DropDownListType;
+
+            //var tagsCol = (exg2antt1.Columns.Add("Tags") as exontrol.EXG2ANTTLib.Column);
+            //tagsCol.AllowDragging = false;
+            //var tagsEditor = tagsCol.Editor;
+            //tagsEditor.EditType = exontrol.EXG2ANTTLib.EditTypeEnum.EditType;
+
+            exontrol.EXG2ANTTLib.Column colEffort = (exg2antt1.Columns.Add("Effort") as exontrol.EXG2ANTTLib.Column);
+            colEffort.LevelKey = 1;
+            colEffort.AllowDragging = false;
+            colEffort.AllowSizing = false;
+            colEffort.Width = 64;
+            colEffort.set_Def(exontrol.EXG2ANTTLib.DefColumnEnum.exCellValueToItemBarProperty, 21);
+
+            exontrol.EXG2ANTTLib.Editor var_Editor = colEffort.Editor;
             var_Editor.EditType = exontrol.EXG2ANTTLib.EditTypeEnum.SliderType;
             var_Editor.set_Option(exontrol.EXG2ANTTLib.EditorOptionEnum.exSliderWidth, -100);
             var_Editor.set_Option(exontrol.EXG2ANTTLib.EditorOptionEnum.exSliderMax, 9);
             var_Editor.set_Option(exontrol.EXG2ANTTLib.EditorOptionEnum.exSliderMin, 1);
-            exontrol.EXG2ANTTLib.Chart var_Chart = exg2antt1.Chart;
-            var_Chart.LevelCount = 3;
-            var_Chart.NonworkingDays = 0;
-            var_Chart.set_PaneWidth(0 != 0, 160);
-            var_Chart.FirstVisibleDate = DateFromString("6/15/2005");
-            var_Chart.HistogramVisible = true;
-            var_Chart.HistogramView = (exontrol.EXG2ANTTLib.HistogramViewEnum)65540;
+
+            exontrol.EXG2ANTTLib.Chart chart = exg2antt1.Chart;
+            chart.LevelCount = 3;
+            chart.NonworkingDays = 0;
+            chart.set_PaneWidth(0 != 0, 300);
+            chart.FirstVisibleDate = DateFromString("9/1/2014");
+            chart.HistogramVisible = true;
+            chart.HistogramView = (exontrol.EXG2ANTTLib.HistogramViewEnum)65540;
             //var_Chart.HistogramView = exontrol.EXG2ANTTLib.HistogramViewEnum.exHistogramCheckedItems | exontrol.EXG2ANTTLib.HistogramViewEnum.exHistogramUnlockedItems | exontrol.EXG2ANTTLib.HistogramViewEnum.exHistogramLeafItems | exontrol.EXG2ANTTLib.HistogramViewEnum.exHistogramNoGrouping | (exontrol.EXG2ANTTLib.HistogramViewEnum)0x10000;
-            var_Chart.HistogramHeight = 64;
-            exontrol.EXG2ANTTLib.Bar var_Bar = var_Chart.Bars["Task"];
+            chart.HistogramHeight = 500;
+            exontrol.EXG2ANTTLib.Bar var_Bar = chart.Bars["Task"];
             var_Bar.HistogramCriticalColor = Color.Red;
             var_Bar.HistogramPattern = (exontrol.EXG2ANTTLib.PatternEnum)512;
             var_Bar.HistogramType = exontrol.EXG2ANTTLib.HistogramTypeEnum.exHistOverAllocation;
 
-            exontrol.EXG2ANTTLib.Items var_Items = exg2antt1.Items;
+            
+            //Row and Bars definition
 
-            int h = var_Items.AddItem("Project 1");
-            var_Items.AddBar(h, "Summary", DateFromString("6/21/2005"), DateFromString("7/1/2005"), null, null);
-            var_Items.set_CellEditorVisible(h, 2, false);
-            var_Items.set_CellValue(h, 2, "");
+            exontrol.EXG2ANTTLib.Items items = exg2antt1.Items;
 
-            int h1 = var_Items.InsertItem(h, 0, "Task 1");
-            var_Items.AddBar(h1, "Task", DateFromString("6/21/2005"), DateFromString("6/28/2005"), null, null);
-            var_Items.set_CellMerge(h1, 0, 1);
-            var_Items.DefineSummaryBars(h, "", h1, "");
+            foreach (var proj in projects)
+            {
+                int h = items.AddItem(proj.Name);
+                items.AddBar(h, "Summary", proj.Start, proj.End, null, null);
+                items.set_CellEditorVisible(h, 2, false);
+                items.set_CellValue(h, 2, "");
 
-            h1 = var_Items.InsertItem(h, 0, "Task 2");
-            var_Items.AddBar(h1, "Task", DateFromString("6/23/2005"), DateFromString("7/1/2005"), "", null);
-            var_Items.set_CellMerge(h1, 0, 1);
-            var_Items.DefineSummaryBars(h, "", h1, "");
-            var_Items.set_ItemBar(h1, "", exontrol.EXG2ANTTLib.ItemBarPropertyEnum.exBarEffort, 5);
+                foreach (var task in proj.Tasks)
+                {
+                    int h1 = items.InsertItem(h, 0, task.Subject);
+                    items.AddBar(h1, "Task", task.StartDate, task.DueDate, null, null);
+                    //items.set_CellValue(h1, 3, task.Body);
 
-            h1 = var_Items.InsertItem(h, 0, "Task 3");
-            var_Items.AddBar(h1, "Task", DateFromString("6/25/2005"), DateFromString("6/27/2005"), "", null);
-            var_Items.set_CellMerge(h1, 0, 1);
-            var_Items.DefineSummaryBars(h, "", h1, "");
+                    items.DefineSummaryBars(h, "", h1, "");
+                    items.set_ItemBar(h1, "", exontrol.EXG2ANTTLib.ItemBarPropertyEnum.exBarEffort, 5);
+                }
 
-            var_Items.set_ExpandItem(h, true);
-            var_Items.set_CellState(h, 1, 1);
+                items.set_ExpandItem(h, true);
+                items.set_CellState(h, 1, 1);
+            }
 
-            h = var_Items.AddItem("Project 2");
-            var_Items.AddBar(h, "Summary", DateFromString("3/7/2005"), DateFromString("7/12/2005"), null, null);
-            var_Items.set_CellEditorVisible(h, 2, false);
-            var_Items.set_CellValue(h, 2, "");
+            //int h = items.AddItem("Project 1");
+            //items.AddBar(h, "Summary", DateFromString("9/1/2014"), DateFromString("10/1/2014"), null, null);
+            //items.set_CellEditorVisible(h, 2, false);
+            //items.set_CellValue(h, 2, "");
 
-            h1 = var_Items.InsertItem(h, 0, "Task 1");
-            var_Items.AddBar(h1, "Task", DateFromString("7/3/2005"), DateFromString("7/8/2005"), null, null);
-            var_Items.set_CellMerge(h1, 0, 1);
-            var_Items.DefineSummaryBars(h, "", h1, "");
+            //int h1 = items.InsertItem(h, 0, "Task 1");
+            //items.AddBar(h1, "Task", DateFromString("9/5/2014"), DateFromString("9/15/2014"), null, null);
+            //items.set_CellValue(h1, 3, "Task 1 description");
+            //items.DefineSummaryBars(h, "", h1, "");
 
-            h1 = var_Items.InsertItem(h, 0, "Task 2");
-            var_Items.AddBar(h1, "Task", DateFromString("7/5/2005"), DateFromString("7/12/2005"), "", null);
-            var_Items.set_CellMerge(h1, 0, 1);
-            var_Items.DefineSummaryBars(h, "", h1, "");
-            var_Items.set_ItemBar(h1, "", exontrol.EXG2ANTTLib.ItemBarPropertyEnum.exBarEffort, 5);
+            //h1 = items.InsertItem(h, 0, "Task 2");
+            //items.AddBar(h1, "Task", DateFromString("9/9/2014"), DateFromString("9/11/2014"), "", null);
+            //items.set_CellValue(h1, 3, "Task 2 description");
 
-            h1 = var_Items.InsertItem(h, 0, "Task 3");
-            var_Items.AddBar(h1, "Task", DateFromString("7/7/2005"), DateFromString("7/8/2005"), "", null);
-            var_Items.set_CellMerge(h1, 0, 1);
-            var_Items.DefineSummaryBars(h, "", h1, "");
+            //h1 = items.InsertItem(h, 0, "Task 3");
+            //items.AddBar(h1, "Task", DateFromString("9/25/2014"), DateFromString("9/27/2014"), "", null);
+            //items.set_CellValue(h1, 3, "Task 3 description");
+            //items.DefineSummaryBars(h, "", h1, "");
 
-            var_Items.set_ExpandItem(h, true);
-            var_Items.set_CellState(h, 1, 1);
+
+            //h = items.AddItem("Project 2");
+            //items.AddBar(h, "Summary", DateFromString("3/7/2005"), DateFromString("7/12/2005"), null, null);
+            //items.set_CellEditorVisible(h, 2, false);
+            //items.set_CellValue(h, 2, "");
+
+            //h1 = items.InsertItem(h, 0, "Task 1");
+            //items.set_CellValue(h1, 1, "Task 1 description");
+            //items.AddBar(h1, "Task", DateFromString("7/3/2005"), DateFromString("7/8/2005"), null, null);
+            ////items.set_CellMerge(h1, 0, 1);
+            //items.DefineSummaryBars(h, "", h1, "");
+
+            //h1 = items.InsertItem(h, 0, "Task 2");
+            //items.set_CellValue(h1, 1, "Task 2 description");
+            //items.AddBar(h1, "Task", DateFromString("7/5/2005"), DateFromString("7/12/2005"), "", null);
+            ////items.set_CellMerge(h1, 0, 1);
+            //items.DefineSummaryBars(h, "", h1, "");
+            //items.set_ItemBar(h1, "", exontrol.EXG2ANTTLib.ItemBarPropertyEnum.exBarEffort, 5);
+
+            //h1 = items.InsertItem(h, 0, "Task 3");
+            //items.set_CellValue(h1, 1, "Task 3 description");
+            //items.AddBar(h1, "Task", DateFromString("7/7/2005"), DateFromString("7/8/2005"), "", null);
+            ////items.set_CellMerge(h1, 0, 1);
+            //items.DefineSummaryBars(h, "", h1, "");
+
+            //items.set_ExpandItem(h, true);
+            //items.set_CellState(h, 1, 1);
 
             exg2antt1.EndUpdate();
         }
@@ -218,14 +301,17 @@ namespace OPCAddin.UI
 
         public List<ProjectItem> Projects { get; set; }
 
-        private void GanttDiagramForm_Load(object sender, EventArgs e)
+        private async void GanttDiagramForm_Load(object sender, EventArgs e)
         {
             //Debug.Assert(this.Projects != null, "Projects property should be set before showing hte GanttDiagramForm");
 
             //var projects = this.GenerateSampleData();
             //this.SetupGantt(projects);
 
-            this.SetupGantt2();
+            var userToken = AddinModule.CurrentInstance.UserToken;
+            var projects = await BackendServiceProxy.GetAllProjectsWithChildTasks(userToken);
+
+            this.SetupGantt2(new List<ProjectItem>(projects.Projects));
             this.SetWin8Thema();
         }
 

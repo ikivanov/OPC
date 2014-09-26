@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Outlook = Microsoft.Office.Interop.Outlook;
 
 namespace OPCAddin.UI
 {
@@ -34,8 +35,8 @@ namespace OPCAddin.UI
                     this.project.Name = txtProjectName.Text;
                     this.project.InternalCode = txtInternalCode.Text;
                     this.project.Description = rtbDescription.Text;
-                    //this.project.Start = dtpStart.Value;
-                    //this.project.End = dtpEnd.Value;
+                    this.project.Start = dtpStart.Value;
+                    this.project.End = dtpEnd.Value;
                 });
 
                 return this.project;
@@ -184,15 +185,78 @@ namespace OPCAddin.UI
             cboProjectManager.SelectedIndex = 0;
         }
 
+        private Outlook.TaskItem task = null;
+
         private void btnCreateTask_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
-            //TODO:
+            Outlook.Application app = new Outlook.Application();
+            this.task = (Outlook.TaskItem)app.CreateItem(Outlook.OlItemType.olTaskItem);
+            this.task.Display();
+            this.task.Write += task_Write;
+        }
+
+        const int TASK_EXTENSION_FORM_INDEX = 0;
+
+        void task_Write(ref bool Cancel)
+        {
+            var taskExtensionForm = AddinModule.CurrentInstance.formsManager.Items[TASK_EXTENSION_FORM_INDEX].GetCurrentForm() as TaskExtensionForm;
+            string projectId = string.Empty;
+
+            if (taskExtensionForm != null)
+            {
+                projectId = taskExtensionForm.GetFormData();
+            }
+
+            var task = new TaskItem
+            {
+                Subject = this.task.Subject,
+                StartDate = this.task.StartDate,
+                DueDate = this.task.DueDate,
+                Status = (int)this.task.Status,
+                SchedulePlusPriority = this.task.SchedulePlusPriority,
+                PercentComplete = this.task.PercentComplete,
+                Body = this.task.Body,
+                ProjectId = projectId
+            };
+            this.CreateTaskOnServer(task);
+        }
+
+        private async void CreateTaskOnServer(TaskItem task)
+        {
+            try
+            {
+                var userToken = AddinModule.CurrentInstance.UserToken;
+                var result = await BackendServiceProxy.CreateTask(userToken, task);
+
+                if (result.Success)
+                {
+                    //this.Project.Id = result.ProjectId;
+                    //if (shouldClose)
+                    //{
+                    //    this.Invoke((MethodInvoker)delegate
+                    //    {
+                    //        this.Close();
+                    //    });
+                    //}
+                }
+                else
+                {
+                    //this.Invoke((MethodInvoker)delegate
+                    //{
+                    MessageBox.Show(result.Msg);
+                    //});
+                }
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("An error occured while creating task");
+            }
         }
 
         private void btnGantt_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
             ProjectPlanForm form = new ProjectPlanForm();
-            form.ShowDialog();
+            form.Show();
         }
 
         private void btnDocuments_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)

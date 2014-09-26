@@ -211,7 +211,7 @@
         private AddinExpress.MSO.ADXRibbonGroup adxRibbonGroup1;
         private AddinExpress.MSO.ADXRibbonButton btnNewProject;
         private AddinExpress.MSO.ADXRibbonButton btnNewTask;
-        private AddinExpress.OL.ADXOlFormsManager formsManager;
+        public AddinExpress.OL.ADXOlFormsManager formsManager;
         private AddinExpress.OL.ADXOlFormsCollectionItem adxOlFormsCollectionItem1;
         private AddinExpress.MSO.ADXContextMenu adxContextMenu1;
         private AddinExpress.MSO.ADXCommandBarButton adxCommandBarButton1;

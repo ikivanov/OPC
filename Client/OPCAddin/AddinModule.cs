@@ -90,10 +90,6 @@ namespace OPCAddin
             this.task = (Outlook.TaskItem) app.CreateItem(Outlook.OlItemType.olTaskItem);
             this.task.Display();
             this.task.Write += task_Write;
-
-            //TODO: open New Task Dialog of Outlook
-            //Set some additional buttons, panels, ribons in it
-            //On save, save it to Mongo if appropriate
         }
 
         const int TASK_EXTENSION_FORM_INDEX = 0;
@@ -164,7 +160,7 @@ namespace OPCAddin
         private void btnGanttChart_OnClick(object sender, IRibbonControl control, bool pressed)
         {
             ProjectPlanForm form = new ProjectPlanForm();
-            form.ShowDialog();
+            form.Show();
         }
 
     }

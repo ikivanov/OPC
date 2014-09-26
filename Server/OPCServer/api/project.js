@@ -43,7 +43,7 @@ var getObjectWithoutId = function (object) {
     var result = {};
 
     for (var propName in object) {
-        if (propName === "Id") {
+        if (propName === "Id" || propName === "Tasks") {
             continue;
         }
 
@@ -144,6 +144,67 @@ exports.getAll = function (req, res) {
             });
 
             db.close();
+        });
+    });
+}
+
+exports.getAllWithTasks = function (req, res) {
+    var userToken = req.params.userToken;
+    
+    if (!user.isValidUserToken(userToken)) {
+        res.send({
+            success: false,
+            msg: "Authentication failed! Invalid user token."
+        });
+        return;
+    }
+
+    MongoClient.connect(connectionString, function (err, db) {
+        db.collection("projects").find().toArray(function (err, projects) {
+            
+            var results = [];
+            var id2project = {};
+            
+            for (var i = 0; i < projects.length; i++) {
+                var project = projects[i];
+                
+                var item = {
+                    Id: project._id.toString(),
+                    Name: project.Name,
+                    InternalCode: project.InternalCode,
+                    Description: project.Description,
+                    Tasks: []
+                };
+                
+                results.push(item);
+                id2project[item.Id] = item;
+            }
+            
+            db.collection("tasks").find().toArray(function (err, tasks) {
+                
+                for (var i = 0; i < tasks.length; i++) {
+                    var task = tasks[i];
+
+                    if (!task.ProjectId) {
+                        continue;
+                    }
+
+                    var project = id2project[task.ProjectId];
+                    if (!project) {
+                        continue;
+                    }
+
+                    project.Tasks.push(task);
+                }
+
+                res.send({
+                    success: true,
+                    projects: results,
+                    msg: "OK",
+                });
+                
+                db.close();
+            });
         });
     });
 }

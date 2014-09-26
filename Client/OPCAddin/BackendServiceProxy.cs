@@ -159,7 +159,7 @@ namespace OPCAddin
             }
         }
 
-        public static async Task<GetAllProjectsResult> GetAllProjects(string userToken)
+        public static async Task<GetAllProjectsResult> LookupProjects(string userToken)
         {
             using (var client = new HttpClient())
             {
@@ -168,6 +168,21 @@ namespace OPCAddin
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
                 var response = await client.GetAsync(string.Format("/api/{0}/projects", userToken));
+                response.EnsureSuccessStatusCode();
+
+                return await response.Content.ReadAsAsync<GetAllProjectsResult>();
+            }
+        }
+
+        public static async Task<GetAllProjectsResult> GetAllProjectsWithChildTasks(string userToken)
+        {
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(serviceUrl);
+                client.DefaultRequestHeaders.Accept.Clear();
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+                var response = await client.GetAsync(string.Format("/api/{0}/projectsWithTasks", userToken));
                 response.EnsureSuccessStatusCode();
 
                 return await response.Content.ReadAsAsync<GetAllProjectsResult>();
