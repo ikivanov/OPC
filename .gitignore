@@ -156,3 +156,4 @@ $RECYCLE.BIN/
 .DS_Store
 /Client/OPCAddin/OPCAddin/*.user
 /Client/OPCAddin/OPCAddin/*.snk
+*.dat

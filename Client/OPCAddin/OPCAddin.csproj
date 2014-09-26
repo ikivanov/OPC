@@ -89,6 +89,9 @@
   <ItemGroup>
     <Content Include="Loader\adxloader.dll" />
     <Content Include="Loader\adxloader64.dll" />
+    <None Include="Resources\ResourcePlanning.png" />
+    <None Include="Resources\Document.png" />
+    <None Include="Resources\Gantt.png" />
     <None Include="Resources\Task.png" />
     <None Include="Resources\Delete.png" />
     <None Include="Resources\Save.png" />

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -192,6 +193,13 @@ namespace OPCAddin.UI
         {
             ProjectPlanForm form = new ProjectPlanForm();
             form.ShowDialog();
+        }
+
+        private void btnDocuments_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
+        {
+            Process process = new Process();
+            process.StartInfo.FileName = "explorer.exe";
+            process.Start();
         }
     }
 }

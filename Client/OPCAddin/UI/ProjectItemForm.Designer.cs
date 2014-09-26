@@ -37,8 +37,8 @@
             this.barButtonItem5 = new DevExpress.XtraBars.BarButtonItem();
             this.btnDocuments = new DevExpress.XtraBars.BarButtonItem();
             this.btnCreateTask = new DevExpress.XtraBars.BarButtonItem();
-            this.barButtonItem3 = new DevExpress.XtraBars.BarButtonItem();
             this.btnSave = new DevExpress.XtraBars.BarButtonItem();
+            this.barButtonItem2 = new DevExpress.XtraBars.BarButtonItem();
             this.ribbonPage1 = new DevExpress.XtraBars.Ribbon.RibbonPage();
             this.ribbonPageGroup1 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             this.ribbonPageGroup2 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
@@ -76,10 +76,10 @@
             this.barButtonItem5,
             this.btnDocuments,
             this.btnCreateTask,
-            this.barButtonItem3,
-            this.btnSave});
+            this.btnSave,
+            this.barButtonItem2});
             this.ribbonControl1.Location = new System.Drawing.Point(0, 0);
-            this.ribbonControl1.MaxItemId = 17;
+            this.ribbonControl1.MaxItemId = 20;
             this.ribbonControl1.Name = "ribbonControl1";
             this.ribbonControl1.Pages.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPage[] {
             this.ribbonPage1});
@@ -97,7 +97,7 @@
             // 
             this.btnSaveAndClose.Caption = "Speichern && Schließen";
             this.btnSaveAndClose.Id = 3;
-            this.btnSaveAndClose.LargeGlyph = global::OPCAddin.Properties.Resources.SaveAndClose;
+            this.btnSaveAndClose.LargeGlyph = global::OPCAddin.Properties.Resources.Gantt;
             this.btnSaveAndClose.Name = "btnSaveAndClose";
             this.btnSaveAndClose.RibbonStyle = DevExpress.XtraBars.Ribbon.RibbonItemStyles.Large;
             this.btnSaveAndClose.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnSaveAndClose_ItemClick);
@@ -115,6 +115,7 @@
             // 
             this.btnGantt.Caption = "Projektplan";
             this.btnGantt.Id = 7;
+            this.btnGantt.LargeGlyph = global::OPCAddin.Properties.Resources.Gantt;
             this.btnGantt.Name = "btnGantt";
             this.btnGantt.RibbonStyle = DevExpress.XtraBars.Ribbon.RibbonItemStyles.Large;
             this.btnGantt.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnGantt_ItemClick);
@@ -130,8 +131,10 @@
             // 
             this.btnDocuments.Caption = "Dokumentverwaltung";
             this.btnDocuments.Id = 9;
+            this.btnDocuments.LargeGlyph = global::OPCAddin.Properties.Resources.Document;
             this.btnDocuments.Name = "btnDocuments";
             this.btnDocuments.RibbonStyle = DevExpress.XtraBars.Ribbon.RibbonItemStyles.Large;
+            this.btnDocuments.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnDocuments_ItemClick);
             // 
             // btnCreateTask
             // 
@@ -143,14 +146,6 @@
             this.btnCreateTask.RibbonStyle = DevExpress.XtraBars.Ribbon.RibbonItemStyles.Large;
             this.btnCreateTask.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnCreateTask_ItemClick);
             // 
-            // barButtonItem3
-            // 
-            this.barButtonItem3.Caption = "Neues Dokument";
-            this.barButtonItem3.CategoryGuid = new System.Guid("6ffddb2b-9015-4d97-a4c1-91613e0ef537");
-            this.barButtonItem3.Id = 15;
-            this.barButtonItem3.Name = "barButtonItem3";
-            this.barButtonItem3.RibbonStyle = DevExpress.XtraBars.Ribbon.RibbonItemStyles.Large;
-            // 
             // btnSave
             // 
             this.btnSave.Caption = "Speichern";
@@ -160,6 +155,15 @@
             this.btnSave.Name = "btnSave";
             this.btnSave.RibbonStyle = DevExpress.XtraBars.Ribbon.RibbonItemStyles.Large;
             this.btnSave.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnSave_ItemClick);
+            // 
+            // barButtonItem2
+            // 
+            this.barButtonItem2.Caption = "Ressourcennutzung";
+            this.barButtonItem2.CategoryGuid = new System.Guid("6ffddb2b-9015-4d97-a4c1-91613e0ef537");
+            this.barButtonItem2.Id = 17;
+            this.barButtonItem2.LargeGlyph = global::OPCAddin.Properties.Resources.ResourcePlanning;
+            this.barButtonItem2.Name = "barButtonItem2";
+            this.barButtonItem2.RibbonStyle = DevExpress.XtraBars.Ribbon.RibbonItemStyles.Large;
             // 
             // ribbonPage1
             // 
@@ -182,12 +186,12 @@
             // 
             this.ribbonPageGroup2.ItemLinks.Add(this.btnCreateTask);
             this.ribbonPageGroup2.ItemLinks.Add(this.btnGantt);
+            this.ribbonPageGroup2.ItemLinks.Add(this.barButtonItem2);
             this.ribbonPageGroup2.Name = "ribbonPageGroup2";
             this.ribbonPageGroup2.Text = "Projekt Verwalten";
             // 
             // ribbonPageGroup3
             // 
-            this.ribbonPageGroup3.ItemLinks.Add(this.barButtonItem3);
             this.ribbonPageGroup3.ItemLinks.Add(this.btnDocuments);
             this.ribbonPageGroup3.Name = "ribbonPageGroup3";
             this.ribbonPageGroup3.Text = "Dokumente";
@@ -478,7 +482,7 @@
         private System.Windows.Forms.ListBox lbTeamMembers;
         private System.Windows.Forms.Label label1;
         private DevExpress.XtraBars.BarButtonItem btnCreateTask;
-        private DevExpress.XtraBars.BarButtonItem barButtonItem3;
         private DevExpress.XtraBars.BarButtonItem btnSave;
+        private DevExpress.XtraBars.BarButtonItem barButtonItem2;
     }
 }

@@ -34,11 +34,11 @@
             this.ribbonPage1 = new DevExpress.XtraBars.Ribbon.RibbonPage();
             this.ribbonPageGroup1 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.exg2antt1 = new exontrol.EXG2ANTTLib.exg2antt();
             this.panel2 = new System.Windows.Forms.Panel();
             this.button1 = new System.Windows.Forms.Button();
             this.radioButton2 = new System.Windows.Forms.RadioButton();
             this.radioButton1 = new System.Windows.Forms.RadioButton();
+            this.exg2antt1 = new exontrol.EXG2ANTTLib.exg2antt();
             ((System.ComponentModel.ISupportInitialize)(this.ribbonControl1)).BeginInit();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
@@ -62,6 +62,7 @@
             // 
             this.btnSaveAndClose.Caption = "Speichern && Schließen";
             this.btnSaveAndClose.Id = 1;
+            this.btnSaveAndClose.LargeGlyph = global::OPCAddin.Properties.Resources.SaveAndClose;
             this.btnSaveAndClose.Name = "btnSaveAndClose";
             this.btnSaveAndClose.RibbonStyle = DevExpress.XtraBars.Ribbon.RibbonItemStyles.Large;
             this.btnSaveAndClose.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnSaveAndClose_ItemClick);
@@ -70,6 +71,7 @@
             // 
             this.btnSave.Caption = "Speichern";
             this.btnSave.Id = 2;
+            this.btnSave.LargeGlyph = global::OPCAddin.Properties.Resources.Save;
             this.btnSave.Name = "btnSave";
             this.btnSave.RibbonStyle = DevExpress.XtraBars.Ribbon.RibbonItemStyles.Large;
             this.btnSave.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnSave_ItemClick);
@@ -97,46 +99,6 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(671, 311);
             this.panel1.TabIndex = 2;
-            // 
-            // exg2antt1
-            // 
-            this.exg2antt1.BackColorAlternate = System.Drawing.Color.Black;
-            this.exg2antt1.BackColorHeader = System.Drawing.SystemColors.Control;
-            this.exg2antt1.BackColorHeader32 = -2147483633;
-            this.exg2antt1.BackColorLevelHeader = System.Drawing.SystemColors.Control;
-            this.exg2antt1.BackColorLock = System.Drawing.SystemColors.Window;
-            this.exg2antt1.BackColorSortBar = System.Drawing.SystemColors.ControlDark;
-            this.exg2antt1.BackColorSortBar32 = -2147483632;
-            this.exg2antt1.BackColorSortBarCaption = System.Drawing.SystemColors.Control;
-            this.exg2antt1.BackColorSortBarCaption32 = -2147483633;
-            this.exg2antt1.CauseValidateValue = exontrol.EXG2ANTTLib.ValidateValueType.exNoValidate;
-            this.exg2antt1.DataMember = null;
-            this.exg2antt1.DataSource = null;
-            this.exg2antt1.DefaultItemHeight = 18;
-            this.exg2antt1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.exg2antt1.FilterBarBackColor = System.Drawing.SystemColors.Control;
-            this.exg2antt1.FilterBarBackColor32 = -2147483633;
-            this.exg2antt1.FilterBarForeColor = System.Drawing.SystemColors.WindowText;
-            this.exg2antt1.ForeColorHeader = System.Drawing.SystemColors.WindowText;
-            this.exg2antt1.ForeColorLock = System.Drawing.SystemColors.WindowText;
-            this.exg2antt1.ForeColorSortBar = System.Drawing.SystemColors.ControlDark;
-            this.exg2antt1.GridLineColor = System.Drawing.SystemColors.ControlDark;
-            this.exg2antt1.HotBackColor = System.Drawing.SystemColors.Window;
-            this.exg2antt1.HotBackColor32 = -2147483643;
-            this.exg2antt1.HotForeColor = System.Drawing.SystemColors.WindowText;
-            this.exg2antt1.HyperLinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(49)))), ((int)(((byte)(101)))), ((int)(((byte)(255)))));
-            this.exg2antt1.Location = new System.Drawing.Point(0, 0);
-            this.exg2antt1.MarkSearchColumn = false;
-            this.exg2antt1.Name = "exg2antt1";
-            this.exg2antt1.PictureLevelHeader = null;
-            this.exg2antt1.SelBackColor = System.Drawing.SystemColors.Highlight;
-            this.exg2antt1.SelBackColor32 = -2147483635;
-            this.exg2antt1.SelForeColor = System.Drawing.SystemColors.HighlightText;
-            this.exg2antt1.SingleSort = false;
-            this.exg2antt1.Size = new System.Drawing.Size(671, 311);
-            this.exg2antt1.TabIndex = 1;
-            this.exg2antt1.TooltipCellsColor = System.Drawing.Color.FromArgb(((int)(((byte)(49)))), ((int)(((byte)(101)))), ((int)(((byte)(255)))));
-            this.exg2antt1.HistogramBoundsChanged += new exontrol.EXG2ANTTLib.exg2antt.HistogramBoundsChangedEventHandler(this.exg2antt1_HistogramBoundsChanged);
             // 
             // panel2
             // 
@@ -180,14 +142,54 @@
             this.radioButton1.Text = "Allocation";
             this.radioButton1.UseVisualStyleBackColor = true;
             // 
-            // GanttDiagramForm
+            // exg2antt1
+            // 
+            this.exg2antt1.BackColorAlternate = System.Drawing.Color.Black;
+            this.exg2antt1.BackColorHeader = System.Drawing.SystemColors.Control;
+            this.exg2antt1.BackColorHeader32 = -2147483633;
+            this.exg2antt1.BackColorLevelHeader = System.Drawing.SystemColors.Control;
+            this.exg2antt1.BackColorLock = System.Drawing.SystemColors.Window;
+            this.exg2antt1.BackColorSortBar = System.Drawing.SystemColors.ControlDark;
+            this.exg2antt1.BackColorSortBar32 = -2147483632;
+            this.exg2antt1.BackColorSortBarCaption = System.Drawing.SystemColors.Control;
+            this.exg2antt1.BackColorSortBarCaption32 = -2147483633;
+            this.exg2antt1.CauseValidateValue = exontrol.EXG2ANTTLib.ValidateValueType.exNoValidate;
+            this.exg2antt1.DataMember = null;
+            this.exg2antt1.DataSource = null;
+            this.exg2antt1.DefaultItemHeight = 18;
+            this.exg2antt1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.exg2antt1.FilterBarBackColor = System.Drawing.SystemColors.Control;
+            this.exg2antt1.FilterBarBackColor32 = -2147483633;
+            this.exg2antt1.FilterBarForeColor = System.Drawing.SystemColors.WindowText;
+            this.exg2antt1.ForeColorHeader = System.Drawing.SystemColors.WindowText;
+            this.exg2antt1.ForeColorLock = System.Drawing.SystemColors.WindowText;
+            this.exg2antt1.ForeColorSortBar = System.Drawing.SystemColors.ControlDark;
+            this.exg2antt1.GridLineColor = System.Drawing.SystemColors.ControlDark;
+            this.exg2antt1.HotBackColor = System.Drawing.SystemColors.Window;
+            this.exg2antt1.HotBackColor32 = -2147483643;
+            this.exg2antt1.HotForeColor = System.Drawing.SystemColors.WindowText;
+            this.exg2antt1.HyperLinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(49)))), ((int)(((byte)(101)))), ((int)(((byte)(255)))));
+            this.exg2antt1.Location = new System.Drawing.Point(0, 0);
+            this.exg2antt1.MarkSearchColumn = false;
+            this.exg2antt1.Name = "exg2antt1";
+            this.exg2antt1.PictureLevelHeader = null;
+            this.exg2antt1.SelBackColor = System.Drawing.SystemColors.Highlight;
+            this.exg2antt1.SelBackColor32 = -2147483635;
+            this.exg2antt1.SelForeColor = System.Drawing.SystemColors.HighlightText;
+            this.exg2antt1.SingleSort = false;
+            this.exg2antt1.Size = new System.Drawing.Size(671, 311);
+            this.exg2antt1.TabIndex = 1;
+            this.exg2antt1.TooltipCellsColor = System.Drawing.Color.FromArgb(((int)(((byte)(49)))), ((int)(((byte)(101)))), ((int)(((byte)(255)))));
+            this.exg2antt1.HistogramBoundsChanged += new exontrol.EXG2ANTTLib.exg2antt.HistogramBoundsChangedEventHandler(this.exg2antt1_HistogramBoundsChanged);
+            // 
+            // ProjectPlanForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(671, 453);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.ribbonControl1);
-            this.Name = "GanttDiagramForm";
+            this.Name = "ProjectPlanForm";
             this.Text = "GanttDiagram";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.Load += new System.EventHandler(this.GanttDiagramForm_Load);
