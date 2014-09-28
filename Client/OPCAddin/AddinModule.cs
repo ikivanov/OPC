@@ -163,6 +163,31 @@ namespace OPCAddin
             form.Show();
         }
 
+        public AddinExpress.MSO.ADXOutlookAppEvents Events
+        {
+            get
+            {
+                return this.adxOutlookEvents;
+            }
+        }
+
+        string serviceUrl = string.Empty;
+        public string ServiceUrl
+        {
+            get
+            {
+                if (string.IsNullOrEmpty(this.serviceUrl))
+                {
+                    this.serviceUrl = OPCAddinSettings.Default.ServiceUrl;
+                    if (string.IsNullOrEmpty(this.serviceUrl))
+                    {
+                        this.serviceUrl = "http://localhost:1337";
+                    }
+                }
+
+                return this.serviceUrl;
+            }
+        }
     }
 }
 

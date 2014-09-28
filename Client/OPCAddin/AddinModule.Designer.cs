@@ -45,6 +45,7 @@
             this.adxContextMenu1 = new AddinExpress.MSO.ADXContextMenu(this.components);
             this.adxCommandBarButton1 = new AddinExpress.MSO.ADXCommandBarButton(this.components);
             this.adxRibbonButton1 = new AddinExpress.MSO.ADXRibbonButton(this.components);
+            this.adxOutlookEvents = new AddinExpress.MSO.ADXOutlookAppEvents(this.components);
             // 
             // opcRibbonTab
             // 
@@ -223,6 +224,7 @@
         private AddinExpress.MSO.ADXRibbonButton btnGanttChart;
         private AddinExpress.MSO.ADXRibbonButton adxRibbonButton3;
         private AddinExpress.MSO.ADXRibbonButton adxRibbonButton2;
+        private AddinExpress.MSO.ADXOutlookAppEvents adxOutlookEvents;
     }
 }
 

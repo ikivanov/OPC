@@ -1,6 +1,7 @@
 ﻿var MongoClient = require('mongodb').MongoClient;
 var crypto = require('crypto');
-var connectionString = "mongodb://localhost:27017/opc";
+var utils = require('./utils');
+var connectionString = utils.getConnectionString();
 
 var users = {};
 users["cbr"] = {username: "cbr", password: "123"};

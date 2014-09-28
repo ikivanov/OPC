@@ -82,7 +82,7 @@ namespace OPCAddin
 
     public class BackendServiceProxy
     {
-        private const string serviceUrl = "http://localhost:1337";
+        private static readonly string serviceUrl = AddinModule.CurrentInstance.ServiceUrl;
 
         public static async Task<LoginResult> Login(Credentials credentials)
         {

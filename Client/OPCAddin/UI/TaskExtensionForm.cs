@@ -15,6 +15,18 @@ namespace OPCAddin.UI
             InitializeComponent();
 
             projectsBinding = new BindingSource();
+            OPCAddin.AddinModule.CurrentInstance.Events.ItemLoad += adxOutlookEvents_ItemLoad;
+        }
+
+        void adxOutlookEvents_ItemLoad(object sender, object item)
+        {
+            //var task = item as Microsoft.Office.Interop.Outlook.TaskItem;
+            //if (task == null)
+            //{
+            //    return;
+            //}
+
+            //var id = task.ConversationIndex;
         }
 
         public string GetFormData()
@@ -22,7 +34,7 @@ namespace OPCAddin.UI
 
             var val = this.cboProjekt.SelectedValue;
 
-            return val.ToString() ?? string.Empty;
+            return val != null ? val.ToString() : string.Empty;
         }
 
         private async void TaskExtensionForm_Load(object sender, EventArgs e)

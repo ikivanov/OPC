@@ -4,6 +4,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 12.0.30723.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OPCAddin", "Client\OPCAddin\OPCAddin.csproj", "{208D06DD-6842-4AED-AA8D-3DCE4C4289CC}"
+	ProjectSection(ProjectDependencies) = postProject
+		{83AAC9F6-1094-40FC-8CE9-2CA0FE8CCBAC} = {83AAC9F6-1094-40FC-8CE9-2CA0FE8CCBAC}
+	EndProjectSection
 EndProject
 Project("{9092AA53-FB77-4645-B42D-1CCCA6BD08BD}") = "OPCServer", "Server\OPCServer\OPCServer.njsproj", "{83AAC9F6-1094-40FC-8CE9-2CA0FE8CCBAC}"
 EndProject

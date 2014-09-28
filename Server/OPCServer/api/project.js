@@ -1,7 +1,8 @@
 ﻿var MongoClient = require('mongodb').MongoClient;
 var crypto = require('crypto');
-var connectionString = "mongodb://localhost:27017/opc";
 var assert = require('assert');
+var utils = require('./utils');
+var connectionString = utils.getConnectionString();
 
 var user = require('./user');
 var ObjectID = require('mongodb').ObjectID;

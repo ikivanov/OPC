@@ -1,4 +1,8 @@
-﻿exports.getObjectWithoutId = function (object) {
+﻿exports.getConnectionString = function () {
+    return "mongodb://localhost:27017/opc";
+}
+
+exports.getObjectWithoutId = function (object) {
     if (!object) {
         return null;
     }
