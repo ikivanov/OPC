@@ -132,6 +132,8 @@ namespace OPCAddin.UI
             var_Editor.set_Option(exontrol.EXG2ANTTLib.EditorOptionEnum.exSliderMin, 1);
 
             exontrol.EXG2ANTTLib.Chart chart = exg2antt1.Chart;
+            chart.AllowOverviewZoom = exontrol.EXG2ANTTLib.OverviewZoomEnum.exAlwaysZoom;
+            chart.OverviewVisible = exontrol.EXG2ANTTLib.OverviewVisibleEnum.exOverviewShowAll;
             chart.LevelCount = 3;
             chart.NonworkingDays = 0;
             chart.set_PaneWidth(0 != 0, 300);
