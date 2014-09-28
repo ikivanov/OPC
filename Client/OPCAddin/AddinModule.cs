@@ -181,13 +181,18 @@ namespace OPCAddin
                     this.serviceUrl = OPCAddinSettings.Default.ServiceUrl;
                     if (string.IsNullOrEmpty(this.serviceUrl))
                     {
-                        this.serviceUrl = "http://localhost:1337";
+                        this.serviceUrl = "http://localhost:3000";
                     }
                 }
 
                 return this.serviceUrl;
             }
         }
+
+        private void btnDashboard_OnClick(object sender, IRibbonControl control, bool pressed)
+        {
+            DashboardForm form = new DashboardForm();
+            form.Show();
+        }
     }
 }
-

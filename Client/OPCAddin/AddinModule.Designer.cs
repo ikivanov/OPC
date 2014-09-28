@@ -34,7 +34,7 @@
             this.adxRibbonButton3 = new AddinExpress.MSO.ADXRibbonButton(this.components);
             this.imageList1 = new System.Windows.Forms.ImageList(this.components);
             this.adxRibbonGroup2 = new AddinExpress.MSO.ADXRibbonGroup(this.components);
-            this.adxRibbonButton2 = new AddinExpress.MSO.ADXRibbonButton(this.components);
+            this.btnDashboard = new AddinExpress.MSO.ADXRibbonButton(this.components);
             this.btnNewProject = new AddinExpress.MSO.ADXRibbonButton(this.components);
             this.btnNewTask = new AddinExpress.MSO.ADXRibbonButton(this.components);
             this.btnNewContact = new AddinExpress.MSO.ADXRibbonButton(this.components);
@@ -89,7 +89,7 @@
             // adxRibbonGroup2
             // 
             this.adxRibbonGroup2.Caption = "Aktionen";
-            this.adxRibbonGroup2.Controls.Add(this.adxRibbonButton2);
+            this.adxRibbonGroup2.Controls.Add(this.btnDashboard);
             this.adxRibbonGroup2.Controls.Add(this.btnNewProject);
             this.adxRibbonGroup2.Controls.Add(this.btnNewTask);
             this.adxRibbonGroup2.Controls.Add(this.btnNewContact);
@@ -97,15 +97,16 @@
             this.adxRibbonGroup2.ImageTransparentColor = System.Drawing.Color.Transparent;
             this.adxRibbonGroup2.Ribbons = ((AddinExpress.MSO.ADXRibbons)((AddinExpress.MSO.ADXRibbons.msrOutlookTask | AddinExpress.MSO.ADXRibbons.msrOutlookExplorer)));
             // 
-            // adxRibbonButton2
+            // btnDashboard
             // 
-            this.adxRibbonButton2.Caption = "Dashboard";
-            this.adxRibbonButton2.Id = "adxRibbonButton_9c5a8d6901a04dfdb23e2e95fabf12f0";
-            this.adxRibbonButton2.Image = 5;
-            this.adxRibbonButton2.ImageList = this.imageList1;
-            this.adxRibbonButton2.ImageTransparentColor = System.Drawing.Color.Transparent;
-            this.adxRibbonButton2.Ribbons = ((AddinExpress.MSO.ADXRibbons)((AddinExpress.MSO.ADXRibbons.msrOutlookTask | AddinExpress.MSO.ADXRibbons.msrOutlookExplorer)));
-            this.adxRibbonButton2.Size = AddinExpress.MSO.ADXRibbonXControlSize.Large;
+            this.btnDashboard.Caption = "Dashboard";
+            this.btnDashboard.Id = "adxRibbonButton_9c5a8d6901a04dfdb23e2e95fabf12f0";
+            this.btnDashboard.Image = 5;
+            this.btnDashboard.ImageList = this.imageList1;
+            this.btnDashboard.ImageTransparentColor = System.Drawing.Color.Transparent;
+            this.btnDashboard.Ribbons = ((AddinExpress.MSO.ADXRibbons)((AddinExpress.MSO.ADXRibbons.msrOutlookTask | AddinExpress.MSO.ADXRibbons.msrOutlookExplorer)));
+            this.btnDashboard.Size = AddinExpress.MSO.ADXRibbonXControlSize.Large;
+            this.btnDashboard.OnClick += new AddinExpress.MSO.ADXRibbonOnAction_EventHandler(this.btnDashboard_OnClick);
             // 
             // btnNewProject
             // 
@@ -223,7 +224,7 @@
         private AddinExpress.MSO.ADXRibbonGroup adxRibbonGroup3;
         private AddinExpress.MSO.ADXRibbonButton btnGanttChart;
         private AddinExpress.MSO.ADXRibbonButton adxRibbonButton3;
-        private AddinExpress.MSO.ADXRibbonButton adxRibbonButton2;
+        private AddinExpress.MSO.ADXRibbonButton btnDashboard;
         private AddinExpress.MSO.ADXOutlookAppEvents adxOutlookEvents;
     }
 }

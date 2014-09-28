@@ -44,9 +44,9 @@ namespace OPCAddin.UI
 
                 
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                MessageBox.Show("An error occured while logging in.");
+                MessageBox.Show("An error occured while logging in. " + ex.Message + " " + ex.StackTrace);
             }
         }
     }
