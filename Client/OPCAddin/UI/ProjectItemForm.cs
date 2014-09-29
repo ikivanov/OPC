@@ -51,7 +51,7 @@ namespace OPCAddin.UI
         {
             try
             {
-                var userToken = AddinModule.CurrentInstance.UserToken;
+                var userToken = LoginService.GetInstance().UserToken;
                 var result = await BackendServiceProxy.CreateProject(userToken, this.Project);
 
                 if (result.Success)
@@ -83,7 +83,7 @@ namespace OPCAddin.UI
         {
             try
             {
-                var userToken = AddinModule.CurrentInstance.UserToken;
+                var userToken = LoginService.GetInstance().UserToken;
                 var result = await BackendServiceProxy.UpdateProject(userToken, this.Project);
 
                 if (result.Success)
@@ -150,7 +150,7 @@ namespace OPCAddin.UI
 
             try
             {
-                var userToken = AddinModule.CurrentInstance.UserToken;
+                var userToken = LoginService.GetInstance().UserToken;
                 var result = await BackendServiceProxy.DeleteProject(userToken, this.Project);
 
                 if (result.Success)
@@ -225,7 +225,7 @@ namespace OPCAddin.UI
         {
             try
             {
-                var userToken = AddinModule.CurrentInstance.UserToken;
+                var userToken = LoginService.GetInstance().UserToken;
                 var result = await BackendServiceProxy.CreateTask(userToken, task);
 
                 if (result.Success)

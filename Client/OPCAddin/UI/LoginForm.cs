@@ -17,36 +17,29 @@ namespace OPCAddin.UI
             InitializeComponent();
         }
 
-        private async void btnLogin_Click(object sender, EventArgs e)
+        private Credentials GetCredentials()
         {
-            string username = this.txtUsername.Text;
-            string password = this.txtPassword.Text;
+            return new Credentials
+            {
+                Username = this.txtUsername.Text,
+                Password = this.txtPassword.Text
+            };
+        }
 
+        private void btnLogin_Click(object sender, EventArgs e)
+        {
             try
             {
-                LoginResult result = await BackendServiceProxy.Login(new Credentials { Username = username, Password = password });
+                LoginService.GetInstance().Login(this.GetCredentials());
 
-                if (result.Success) 
+                this.Invoke((MethodInvoker)delegate
                 {
-                    AddinModule.CurrentInstance.UserToken = result.UserToken;
-                    this.Invoke((MethodInvoker)delegate
-                    {
-                        this.Close();
-                    });
-                }
-                else
-                {
-                    this.Invoke((MethodInvoker)delegate
-                    {
-                        MessageBox.Show(result.Msg);
-                    }); 
-                }
-
-                
+                    this.Close();
+                });
             }
             catch (Exception ex)
             {
-                MessageBox.Show("An error occured while logging in. " + ex.Message + " " + ex.StackTrace);
+                MessageBox.Show("An error occured while logging in: " + ex.Message);
             }
         }
     }

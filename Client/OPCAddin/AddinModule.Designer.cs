@@ -39,7 +39,7 @@
             this.btnNewTask = new AddinExpress.MSO.ADXRibbonButton(this.components);
             this.btnNewContact = new AddinExpress.MSO.ADXRibbonButton(this.components);
             this.adxRibbonGroup3 = new AddinExpress.MSO.ADXRibbonGroup(this.components);
-            this.btnGanttChart = new AddinExpress.MSO.ADXRibbonButton(this.components);
+            this.btnProjectPlan = new AddinExpress.MSO.ADXRibbonButton(this.components);
             this.formsManager = new AddinExpress.OL.ADXOlFormsManager(this.components);
             this.adxOlFormsCollectionItem1 = new AddinExpress.OL.ADXOlFormsCollectionItem(this.components);
             this.adxContextMenu1 = new AddinExpress.MSO.ADXContextMenu(this.components);
@@ -100,6 +100,7 @@
             // btnDashboard
             // 
             this.btnDashboard.Caption = "Dashboard";
+            this.btnDashboard.Enabled = false;
             this.btnDashboard.Id = "adxRibbonButton_9c5a8d6901a04dfdb23e2e95fabf12f0";
             this.btnDashboard.Image = 5;
             this.btnDashboard.ImageList = this.imageList1;
@@ -111,6 +112,7 @@
             // btnNewProject
             // 
             this.btnNewProject.Caption = "Neues Projekt";
+            this.btnNewProject.Enabled = false;
             this.btnNewProject.Id = "adxRibbonButton_cc91ed65db3840ab838b6faceeb5b38c";
             this.btnNewProject.Image = 3;
             this.btnNewProject.ImageList = this.imageList1;
@@ -122,6 +124,7 @@
             // btnNewTask
             // 
             this.btnNewTask.Caption = "Neue Aufgabe";
+            this.btnNewTask.Enabled = false;
             this.btnNewTask.Id = "adxRibbonButton_a5993cf3eb924d788b15d71b20d6d5cb";
             this.btnNewTask.Image = 1;
             this.btnNewTask.ImageList = this.imageList1;
@@ -133,6 +136,7 @@
             // btnNewContact
             // 
             this.btnNewContact.Caption = "Neuer Kontakt";
+            this.btnNewContact.Enabled = false;
             this.btnNewContact.Id = "adxRibbonButton_c4ed7dc3b73f4558ab38b81b41dfb195";
             this.btnNewContact.Image = 2;
             this.btnNewContact.ImageList = this.imageList1;
@@ -144,21 +148,22 @@
             // adxRibbonGroup3
             // 
             this.adxRibbonGroup3.Caption = "Projektverwaltung";
-            this.adxRibbonGroup3.Controls.Add(this.btnGanttChart);
+            this.adxRibbonGroup3.Controls.Add(this.btnProjectPlan);
             this.adxRibbonGroup3.Id = "adxRibbonGroup_3ab92880ea7149b29eee41921ac94730";
             this.adxRibbonGroup3.ImageTransparentColor = System.Drawing.Color.Transparent;
             this.adxRibbonGroup3.Ribbons = ((AddinExpress.MSO.ADXRibbons)((AddinExpress.MSO.ADXRibbons.msrOutlookTask | AddinExpress.MSO.ADXRibbons.msrOutlookExplorer)));
             // 
-            // btnGanttChart
+            // btnProjectPlan
             // 
-            this.btnGanttChart.Caption = "Projektplan";
-            this.btnGanttChart.Id = "adxRibbonButton_421dff726ed14e5d9c0213037ea98c05";
-            this.btnGanttChart.Image = 4;
-            this.btnGanttChart.ImageList = this.imageList1;
-            this.btnGanttChart.ImageTransparentColor = System.Drawing.Color.Transparent;
-            this.btnGanttChart.Ribbons = ((AddinExpress.MSO.ADXRibbons)((AddinExpress.MSO.ADXRibbons.msrOutlookTask | AddinExpress.MSO.ADXRibbons.msrOutlookExplorer)));
-            this.btnGanttChart.Size = AddinExpress.MSO.ADXRibbonXControlSize.Large;
-            this.btnGanttChart.OnClick += new AddinExpress.MSO.ADXRibbonOnAction_EventHandler(this.btnGanttChart_OnClick);
+            this.btnProjectPlan.Caption = "Projektplan";
+            this.btnProjectPlan.Enabled = false;
+            this.btnProjectPlan.Id = "adxRibbonButton_421dff726ed14e5d9c0213037ea98c05";
+            this.btnProjectPlan.Image = 4;
+            this.btnProjectPlan.ImageList = this.imageList1;
+            this.btnProjectPlan.ImageTransparentColor = System.Drawing.Color.Transparent;
+            this.btnProjectPlan.Ribbons = ((AddinExpress.MSO.ADXRibbons)((AddinExpress.MSO.ADXRibbons.msrOutlookTask | AddinExpress.MSO.ADXRibbons.msrOutlookExplorer)));
+            this.btnProjectPlan.Size = AddinExpress.MSO.ADXRibbonXControlSize.Large;
+            this.btnProjectPlan.OnClick += new AddinExpress.MSO.ADXRibbonOnAction_EventHandler(this.btnProjectPlan_OnClick);
             // 
             // formsManager
             // 
@@ -222,7 +227,7 @@
         private AddinExpress.MSO.ADXRibbonButton btnNewContact;
         private System.Windows.Forms.ImageList imageList1;
         private AddinExpress.MSO.ADXRibbonGroup adxRibbonGroup3;
-        private AddinExpress.MSO.ADXRibbonButton btnGanttChart;
+        private AddinExpress.MSO.ADXRibbonButton btnProjectPlan;
         private AddinExpress.MSO.ADXRibbonButton adxRibbonButton3;
         private AddinExpress.MSO.ADXRibbonButton btnDashboard;
         private AddinExpress.MSO.ADXOutlookAppEvents adxOutlookEvents;

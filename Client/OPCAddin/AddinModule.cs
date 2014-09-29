@@ -20,8 +20,29 @@ namespace OPCAddin
             Application.EnableVisualStyles();
             InitializeComponent();
             // Please add any initialization code to the AddinInitialize event handler
+
+            this.AddinInitialize += AddinModule_AddinInitialize;
         }
- 
+
+        void AddinModule_AddinInitialize(object sender, EventArgs e)
+        {
+            LoginService.GetInstance().LogedIn += this.OnLoggedIn;
+        }
+
+        private void OnLoggedIn(object sender, EventArgs e)
+        {
+            this.EnableUI();
+        }
+
+        private void EnableUI(bool enable = true)
+        {
+            this.btnDashboard.Enabled = enable;
+            this.btnNewProject.Enabled = enable;
+            this.btnNewTask.Enabled = enable;
+            this.btnNewContact.Enabled = enable;
+            this.btnProjectPlan.Enabled = enable;
+        }
+
         #region Add-in Express automatic code
  
         // Required by Add-in Express - do not modify
@@ -68,8 +89,6 @@ namespace OPCAddin
                 return (HostApplication as Outlook._Application);
             }
         }
-
-        public string UserToken {get; set;}
 
         private void btnLogin_OnClick(object sender, IRibbonControl control, bool pressed)
         {
@@ -122,7 +141,7 @@ namespace OPCAddin
         {
             try
             {
-                var userToken = AddinModule.CurrentInstance.UserToken;
+                var userToken = LoginService.GetInstance().UserToken;
                 var result = await BackendServiceProxy.CreateTask(userToken, task);
 
                 if (result.Success)
@@ -157,12 +176,6 @@ namespace OPCAddin
             contact.Display();
         }
 
-        private void btnGanttChart_OnClick(object sender, IRibbonControl control, bool pressed)
-        {
-            ProjectPlanForm form = new ProjectPlanForm();
-            form.Show();
-        }
-
         public AddinExpress.MSO.ADXOutlookAppEvents Events
         {
             get
@@ -192,6 +205,12 @@ namespace OPCAddin
         private void btnDashboard_OnClick(object sender, IRibbonControl control, bool pressed)
         {
             DashboardForm form = new DashboardForm();
+            form.Show();
+        }
+
+        private void btnProjectPlan_OnClick(object sender, IRibbonControl control, bool pressed)
+        {
+            ProjectPlanForm form = new ProjectPlanForm();
             form.Show();
         }
     }

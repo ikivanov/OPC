@@ -39,7 +39,7 @@ namespace OPCAddin.UI
 
         private async void TaskExtensionForm_Load(object sender, EventArgs e)
         {
-            var userToken = OPCAddin.AddinModule.CurrentInstance.UserToken;
+            var userToken = LoginService.GetInstance().UserToken;
             var result = await BackendServiceProxy.LookupProjects(userToken);
             
             this.SetBinding(result.Projects);

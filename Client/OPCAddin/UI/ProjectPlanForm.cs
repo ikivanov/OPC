@@ -310,7 +310,7 @@ namespace OPCAddin.UI
             //var projects = this.GenerateSampleData();
             //this.SetupGantt(projects);
 
-            var userToken = AddinModule.CurrentInstance.UserToken;
+            var userToken = LoginService.GetInstance().UserToken;
             var projects = await BackendServiceProxy.GetAllProjectsWithChildTasks(userToken);
 
             this.SetupGantt2(new List<ProjectItem>(projects.Projects));
