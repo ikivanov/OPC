@@ -1,8 +1,7 @@
-﻿var MongoClient = require('mongodb').MongoClient;
-var crypto = require('crypto');
+﻿var crypto = require('crypto');
 var assert = require('assert');
 var utils = require('./utils');
-var connectionString = utils.getConnectionString();
+var dalService = require('../dal/dalService');
 
 var user = require('./user');
 var ObjectID = require('mongodb').ObjectID;
@@ -23,20 +22,31 @@ exports.create = function (req, res) {
     if (task.ProjectId) {
         task.ProjectId = new ObjectID(task.ProjectId);
     }
-    
-    MongoClient.connect(connectionString, function (err, db) {
-        db.collection("tasks").insert([task], { w: 1 }, function (err, result) {
-            assert.equal(null, err);
-            
-            var taskId = new ObjectID(result[0]._id);
-            
+
+    dalService.insert("tasks", task, function (err, result) {
+        var errMsg = "";
+        if (err != null) {
+            errMsg = "An error occured while insertinga task. Details: " + err.message;
+        }
+        
+        if (!result || result.length === 0) {
+            errMsg = "An error occured while inserting a task.";
+        }
+        
+        if (errMsg) {
             res.send({
-                success : true,
-                TaskId: taskId.toHexString(),
-                msg: "OK"
+                success : false,
+                msg: errMsg
             });
+            return;
+        }
+
+        var taskId = new ObjectID(result[0]._id);
             
-            db.close();
+        res.send({
+            success : true,
+            TaskId: taskId.toHexString(),
+            msg: "OK"
         });
     });
 }

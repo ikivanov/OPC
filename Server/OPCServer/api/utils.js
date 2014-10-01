@@ -1,6 +1,5 @@
-﻿exports.getConnectionString = function () {
-    return "mongodb://localhost:27017/opc";
-}
+﻿var MongoClient = require('mongodb').MongoClient;
+var assert = require('assert');
 
 exports.getObjectWithoutId = function (object) {
     if (!object) {

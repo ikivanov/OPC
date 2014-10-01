@@ -1,8 +1,6 @@
-﻿var MongoClient = require('mongodb').MongoClient;
-var crypto = require('crypto');
+﻿var crypto = require('crypto');
 var assert = require('assert');
-var utils = require('./utils');
-var connectionString = utils.getConnectionString();
+var dalService = require('../dal/dalService');
 
 var user = require('./user');
 var ObjectID = require('mongodb').ObjectID;
@@ -19,19 +17,30 @@ exports.create = function (req, res) {
         return;
     }
 
-    MongoClient.connect(connectionString, function (err, db) {
-        db.collection("projects").insert([getObjectWithoutId(project)], {w: 1}, function (err, result) {
-            assert.equal(null, err);
-            
-            var projectId = new ObjectID(result[0]._id);
-
+    dalService.insert("projects", getObjectWithoutId(project), function (err, result) {
+        var errMsg = "";
+        if (err != null) {
+            errMsg = "An error occured while creating a project. Details: " + err.message;
+        }
+        
+        if (!result || result.length === 0) {
+            errMsg = "An error occured while creating a project.";
+        }
+        
+        if (errMsg) {
             res.send({
-                success : true,
-                ProjectId: projectId.toHexString(),
-                msg: "OK"
+                success : false,
+                msg: errMsg
             });
+            return;
+        }
+        
+        var projectId = new ObjectID(result[0]._id);
 
-            db.close();
+        res.send({
+            success : true,
+            ProjectId: projectId.toHexString(),
+            msg: "OK"
         });
     });
 }
@@ -67,17 +76,20 @@ exports.update = function (req, res) {
         });
         return;
     }
-    
-    MongoClient.connect(connectionString, function (err, db) {
-        db.collection("projects").update({_id: new ObjectID(project.Id)}, getObjectWithoutId(project), function (err, result) {
-            assert.equal(null, err);
-            
+
+    dalService.update("projects", { _id: new ObjectID(project.Id) }, getObjectWithoutId(project), function (err, result) {
+        if (err !== null) {
             res.send({
-                success : true,
-                msg: "OK"
+                success : false,
+                msg: "An error occured while updating a project."
             });
-            
-            db.close();
+
+            return;
+        }
+
+        res.send({
+            success : true,
+            msg: "OK"
         });
     });
 }
@@ -94,17 +106,19 @@ exports.delete = function (req, res) {
         return;
     }
 
-    MongoClient.connect(connectionString, function (err, db) {
-        db.collection("projects").remove({ _id: new ObjectID(projectId) }, { w: 1 }, function (err, numberOfRemovedDocs) {
-            assert.equal(null, err);
-            assert.equal(1, numberOfRemovedDocs);
-            
+    dalService.remove("projects", { _id: new ObjectID(projectId) }, function (err, numberOfRemovedDocs) {
+        if (err !== null) {
             res.send({
-                success : true,
-                msg: "OK"
+                success : false,
+                msg: "An error occured while deleting a project."
             });
             
-            db.close();
+            return;
+        }
+
+        res.send({
+            success : true,
+            msg: "OK"
         });
     });
 }
@@ -119,34 +133,32 @@ exports.getAll = function (req, res) {
         });
         return;
     }
+    
+    var select = dalService.select("projects");
+    dalService.executeSelect(select, function (err, projects) {
+        assert.equal(null, err);
+        
+        var results = [];
 
-    MongoClient.connect(connectionString, function (err, db) {
-        db.collection("projects").find().toArray(function (err, projects) {
+        for (var i = 0; i < projects.length; i++) {
+            var project = projects[i];
 
-            var results = [];
+            var item = {
+                Id: project._id.toString(),
+                Name: project.Name,
+                InternalCode: project.InternalCode,
+                Description: project.Description
+            };
 
-            for (var i = 0; i < projects.length; i++) {
-                var project = projects[i];
+            results.push(item);
+        }
 
-                var item = {
-                    Id: project._id.toString(),
-                    Name: project.Name,
-                    InternalCode: project.InternalCode,
-                    Description: project.Description
-                };
-
-                results.push(item);
-            }
-
-            res.send({
-                success: true,
-                projects: results,
-                msg: "OK",
-            });
-
-            db.close();
+        res.send({
+            success: true,
+            projects: results,
+            msg: "OK",
         });
-    });
+    });    
 }
 
 exports.getAllWithTasks = function (req, res) {
@@ -160,52 +172,27 @@ exports.getAllWithTasks = function (req, res) {
         return;
     }
 
-    MongoClient.connect(connectionString, function (err, db) {
-        db.collection("projects").find().toArray(function (err, projects) {
+    var select = dalService.select("projects").join(dalService.select("tasks"), "ProjectId", "Tasks");
+    dalService.executeSelect(select, function (err, projects) {
+        var results = [];
+
+        for (var i = 0; i < projects.length; i++) {
+            var project = projects[i];
             
-            var results = [];
-            var id2project = {};
-            
-            for (var i = 0; i < projects.length; i++) {
-                var project = projects[i];
-                
-                var item = {
-                    Id: project._id.toString(),
-                    Name: project.Name,
-                    InternalCode: project.InternalCode,
-                    Description: project.Description,
-                    Tasks: []
-                };
-                
-                results.push(item);
-                id2project[item.Id] = item;
-            }
-            
-            db.collection("tasks").find().toArray(function (err, tasks) {
-                
-                for (var i = 0; i < tasks.length; i++) {
-                    var task = tasks[i];
+            var item = {
+                Id: project._id.toString(),
+                Name: project.Name,
+                InternalCode: project.InternalCode,
+                Description: project.Description,
+                Tasks: project.Tasks
+            };
+            results.push(item);
+        }
 
-                    if (!task.ProjectId) {
-                        continue;
-                    }
-
-                    var project = id2project[task.ProjectId];
-                    if (!project) {
-                        continue;
-                    }
-
-                    project.Tasks.push(task);
-                }
-
-                res.send({
-                    success: true,
-                    projects: results,
-                    msg: "OK",
-                });
-                
-                db.close();
-            });
+        res.send({
+            success: true,
+            projects: results,
+            msg: "OK",
         });
     });
 }

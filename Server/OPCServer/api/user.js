@@ -1,7 +1,5 @@
-﻿var MongoClient = require('mongodb').MongoClient;
-var crypto = require('crypto');
-var utils = require('./utils');
-var connectionString = utils.getConnectionString();
+﻿var crypto = require('crypto');
+var dalService = require('../dal/dalService');
 
 var users = {};
 users["cbr"] = {username: "cbr", password: "123"};
@@ -24,29 +22,34 @@ exports.isValidUserToken = function (userToken) {
 exports.login = function (req, res) {
     var username = req.body.Username;
     var password = req.body.Password;
-    
-    MongoClient.connect(connectionString, function (err, db) {
-        var passwordHash = crypto.createHash('md5').update(password).digest('hex');
-        db.collection("users").findOne({ username : username, password: passwordHash }, function (err, user) {
-            if (user) {
-                var userToken = crypto.randomBytes(20).toString('hex');
-                var userId = user._id.toString();
-                loggedUsers[userToken] = userId;
+
+    var passwordHash = crypto.createHash('md5').update(password).digest('hex');
+    var select = dalService.select("users", { username : username, password: passwordHash });
+    dalService.executeSelect(select, function (err, results) {
+        if (err) {
+            res.send({
+                success : false, 
+                msg: "An error occured while logging in!. Details: " + err.msessage
+            });
+        }
+
+        if (results && results.length > 0) {
+            var user = results[0];
+            var userToken = crypto.randomBytes(20).toString('hex');
+            var userId = user._id.toString();
+            loggedUsers[userToken] = userId;
                 
-                res.send({
-                    success : true,
-                    userToken: userToken,
-                    msg : "OK",
-                });
-            } else {
-                res.send({
-                    success : false, 
-                    msg: "Authentication failed! Bad username or password."
-                });
-            }
-            
-            db.close();
-        });
+            res.send({
+                success : true,
+                userToken: userToken,
+                msg : "OK",
+            });
+        } else {
+            res.send({
+                success : false, 
+                msg: "Authentication failed! Bad username or password."
+            });
+        }
     });
 }
 

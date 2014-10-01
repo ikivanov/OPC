@@ -33,6 +33,7 @@
     <Compile Include="api\task.js" />
     <Compile Include="api\utils.js" />
     <Compile Include="app.js" />
+    <Compile Include="dal\dalService.js" />
     <Compile Include="routes\index.js" />
     <Compile Include="api\project.js" />
     <Compile Include="api\user.js" />
@@ -44,6 +45,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="api\" />
+    <Folder Include="dal\" />
     <Folder Include="public\" />
     <Folder Include="public\images\" />
     <Folder Include="public\javascripts\" />
