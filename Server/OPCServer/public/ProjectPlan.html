@@ -1,0 +1,23 @@
+﻿<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+
+    <script src="TreeGrid/GridE.js"> </script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+
+    <script>
+        $(function () {
+            var data = window.external.GetGridData();
+            TreeGrid($.parseJSON(data), "projectPlanGrid", "projectPlanGrid");
+
+            //TreeGrid("<Grid><Cfg id='Simple1'/><Cols><C Name='Col1'/></Cols><Body><B/></Body></Grid>", "projectPlanGrid", "projectPlanGrid");
+        });
+    </script>
+</head>
+<body>
+    <div id="projectPlanGrid"></div>
+</body>
+</html>

@@ -74,6 +74,13 @@ namespace OPCAddin
         public bool Success { get; set; }
     }
 
+    public class ProjectPlanResult
+    {
+        public string Data { get; set; }
+        public string Msg { get; set; }
+        public bool Success { get; set; }
+    }
+
     public class TransferObject<T>
     {
         public string UserToken { get; set; }
@@ -186,6 +193,21 @@ namespace OPCAddin
                 response.EnsureSuccessStatusCode();
 
                 return await response.Content.ReadAsAsync<GetAllProjectsResult>();
+            }
+        }
+
+        public static async Task<ProjectPlanResult> GetProjectsPlan(string userToken)
+        {
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(serviceUrl);
+                client.DefaultRequestHeaders.Accept.Clear();
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+                var response = await client.GetAsync(string.Format("/api/{0}/projectPlan", userToken));
+                response.EnsureSuccessStatusCode();
+
+                return await response.Content.ReadAsAsync<ProjectPlanResult>();
             }
         }
     }

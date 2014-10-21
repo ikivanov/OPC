@@ -46,6 +46,7 @@ app.delete('/api/:userToken/project/:id', project.delete);
 app.get('/api/:userToken/projects', project.getAll);
 app.get('/api/:userToken/projectsWithTasks', project.getAllWithTasks);
 app.get('/api/:userToken/project/:id', project.getById);
+app.get('/api/:userToken/projectPlan', project.projectPlan);
 
 //task related functionality
 app.put('/api/task', task.create);
