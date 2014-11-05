@@ -1,8 +1,28 @@
 ﻿var MongoClient = require('mongodb').MongoClient;
 var assert = require('assert');
+var format = require('util').format;
 
+var replicaSet = {
+    active: false,
+    primary: "Win7VM:30000",
+    secondary: "Win7VM:40000",
+    arbiter: "Win7VM:50000",
+    dbName: "opc",
+    replicationName: "opcRepl",
+    readPreference: "secondaryPreferred"
+};
 
 getConnectionString = function () {
+    if (replicaSet.active) {
+        return format("mongodb://%s,%s,%s/%s?replicaSet=%s&readPreference=%s"
+                        , replicaSet.primary
+                        , replicaSet.secondary
+                        , replicaSet.arbiter
+                        , replicaSet.dbName
+                        , replicaSet.replicationName
+                        , replicaSet.readPreference);
+    }
+
     return "mongodb://localhost:27017/opc";
 }
 
