@@ -1,4 +1,14 @@
-﻿var express = require('express');
+﻿var config = require("konfig")();
+
+if (!config.app) {
+    throw new Error("Configuration file needs to be provided!");
+}
+
+global.getConfig = function() {
+    return config.app;
+}
+
+var express = require('express');
 var routes = require('./routes');
 var user = require('./api/user');
 var project = require('./api/project');
@@ -9,7 +19,7 @@ var bodyParser = require('body-parser');
 
 var app = express();
 
-app.set('port', process.env.PORT || 3000);
+//app.set('port', process.env.PORT || 3000);
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
@@ -51,7 +61,9 @@ app.get('/api/:userToken/projectPlan', project.projectPlan);
 //task related functionality
 app.put('/api/task', task.create);
 
+var cfg = global.getConfig();
+var defaultBacklog = 511;
 
-http.createServer(app).listen(app.get('port'), function(){
-  console.log('OPC server listening on port ' + app.get('port'));
+http.createServer(app).listen(cfg.nodejs_port, cfg.nodejs_host, defaultBacklog, function(){
+    console.log('OPC server listening on port ' + cfg.nodejs_port);
 });
