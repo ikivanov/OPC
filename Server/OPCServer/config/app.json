@@ -1,0 +1,35 @@
+{
+    "default": {
+        "db_name": "opc"
+    },
+
+    "development": {
+        "nodejs_port": 1337,
+        "nodejs_host": "127.0.0.1",
+        "mongo_port": 27017,
+        "mongo_host": "localhost",
+        "replicaSet": {
+            "active": false,
+            "primary": "Win7VM:30000",
+            "secondary": "Win7VM:40000",
+            "arbiter": "Win7VM:50000",
+            "replicationName": "opcRepl",
+            "readPreference": "secondaryPreferred"
+        }
+    },
+
+  "production":{
+    "nodejs_port": 80,
+    "nodejs_host": "nodejsServer",
+    "mongo_port": 27017,
+    "mongo_host": "mongodbServer",
+    "replicaSet": {
+        "active": false,
+        "primary": "Win7VM:30000",
+        "secondary": "Win7VM:40000",
+        "arbiter": "Win7VM:50000",
+        "replicationName": "opcRepl",
+        "readPreference": "secondaryPreferred"
+    }
+  }
+}

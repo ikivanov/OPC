@@ -5,6 +5,7 @@
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
     <Name>ExpressApp7</Name>
     <RootNamespace>ExpressApp7</RootNamespace>
+    <Environment>NODE_ENV=development</Environment>
   </PropertyGroup>
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -39,6 +40,7 @@
     <Compile Include="routes\index.js" />
     <Compile Include="api\project.js" />
     <Compile Include="api\user.js" />
+    <Content Include="config\app.json" />
     <Content Include="package.json" />
     <Content Include="public\ProjectPlan.html" />
     <Content Include="public\stylesheets\style.styl" />
@@ -299,6 +301,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="api\" />
+    <Folder Include="config\" />
     <Folder Include="dal\" />
     <Folder Include="public\" />
     <Folder Include="public\images\" />

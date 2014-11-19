@@ -2,15 +2,8 @@
 var assert = require('assert');
 var format = require('util').format;
 
-var replicaSet = {
-    active: false,
-    primary: "Win7VM:30000",
-    secondary: "Win7VM:40000",
-    arbiter: "Win7VM:50000",
-    dbName: "opc",
-    replicationName: "opcRepl",
-    readPreference: "secondaryPreferred"
-};
+var cfg = global.getConfig();
+var replicaSet = cfg.replicaSet;
 
 getConnectionString = function () {
     if (replicaSet.active) {
@@ -18,12 +11,17 @@ getConnectionString = function () {
                         , replicaSet.primary
                         , replicaSet.secondary
                         , replicaSet.arbiter
-                        , replicaSet.dbName
+                        , cfg.db_name
                         , replicaSet.replicationName
                         , replicaSet.readPreference);
     }
 
-    return "mongodb://localhost:27017/opc";
+    //"mongodb://localhost:27017/opc";
+    return format("mongodb://%s:%s/%s"
+        , cfg.mongo_host
+        , cfg.mongo_port
+        , cfg.db_name
+    );
 }
 
 exports.select = function (collectionName, condition) {
