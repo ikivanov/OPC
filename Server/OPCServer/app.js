@@ -1,4 +1,8 @@
-﻿var config = require("konfig")();
+﻿if (process.env.NODE_ENV === undefined) {
+    process.env.NODE_ENV = "development";
+}
+
+var config = require("konfig")();
 
 if (!config.app) {
     throw new Error("Configuration file needs to be provided!");
@@ -62,8 +66,8 @@ app.get('/api/:userToken/projectPlan', project.projectPlan);
 app.put('/api/task', task.create);
 
 var cfg = global.getConfig();
-var defaultBacklog = 511;
+var port = cfg.nodejs_port;
 
-http.createServer(app).listen(cfg.nodejs_port, cfg.nodejs_host, defaultBacklog, function(){
-    console.log('OPC server listening on port ' + cfg.nodejs_port);
+http.createServer(app).listen(port, function(){
+    console.log('OPC server listening on port ' + port);
 });
