@@ -52,8 +52,7 @@ namespace OPCAddin.UI
 
         public string GetGridData()
         {
-            var userToken = LoginService.GetInstance().UserToken;
-            var s = BackendServiceProxy.GetProjectsPlan(userToken).Result;
+            var s = BackendServiceProxy.GetProjectsPlan().Result;
             return s.Data;
         }
 

@@ -141,8 +141,7 @@ namespace OPCAddin
         {
             try
             {
-                var userToken = LoginService.GetInstance().UserToken;
-                var result = await BackendServiceProxy.CreateTask(userToken, task);
+                var result = await BackendServiceProxy.CreateTask(task);
 
                 if (result.Success)
                 {

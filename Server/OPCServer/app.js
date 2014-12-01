@@ -21,11 +21,30 @@ var http = require('http');
 var path = require('path');
 var bodyParser = require('body-parser');
 
+var session = require('express-session');
+var MemcachedStore = require('connect-memcached')(session);
+
+
 var app = express();
 
-//app.set('port', process.env.PORT || 3000);
+var cfg = global.getConfig();
+var port = cfg.nodejs_port;
+
+app.set('port', port || 3000);
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
+
+var memcachedStore = new MemcachedStore({
+    hosts: cfg.memcached.host
+});
+
+app.use(session({
+    key: cfg.memcached.key,
+    secret: cfg.memcached.secret,
+    resave: true,
+    saveUninitialized: true,
+    store: memcachedStore
+}));
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
@@ -46,6 +65,18 @@ app.use(express.static(path.join(__dirname, 'public')));
   //app.use(express.errorHandler());
 //}
 
+//this is cookied based authentication method
+function authenticate(req, res, next) {
+    if (req.session.sid) { //this not only checks if the cookied has sid field defined, but checks if sid exists in db!!!
+        next();
+    } else {
+        res.send({
+            success: false, 
+            message: "Authenticated failed: Login first!"
+        });
+    }
+}
+
 //hit on site root
 app.get('/', routes.index);
 
@@ -54,19 +85,15 @@ app.post('/api/login', user.login);
 app.get('/api/logout', user.logout);
 
 //project related functionality
-app.put('/api/project', project.create);
-app.post('/api/project', project.update);
-app.delete('/api/:userToken/project/:id', project.delete);
-app.get('/api/:userToken/projects', project.getAll);
-app.get('/api/:userToken/projectsWithTasks', project.getAllWithTasks);
-app.get('/api/:userToken/project/:id', project.getById);
-app.get('/api/:userToken/projectPlan', project.projectPlan);
+app.put('/api/project', authenticate, project.create);
+app.post('/api/project', authenticate, project.update);
+app.delete('/api/project/:id', authenticate, project.delete);
+app.get('/api/projects', authenticate, project.getAll);
+app.get('/api/projectsWithTasks', authenticate, project.getAllWithTasks);
+app.get('/api/projectPlan', authenticate, project.projectPlan);
 
 //task related functionality
-app.put('/api/task', task.create);
-
-var cfg = global.getConfig();
-var port = cfg.nodejs_port;
+app.put('/api/task', authenticate, task.create);
 
 http.createServer(app).listen(port, function(){
     console.log('OPC server listening on port ' + port);

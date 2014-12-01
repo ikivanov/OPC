@@ -7,16 +7,7 @@ var user = require('./user');
 var ObjectID = require('mongodb').ObjectID;
 
 exports.create = function (req, res) {
-    var userToken = req.body.UserToken;
-    var task = req.body.Payload;
-    
-    if (!user.isValidUserToken(userToken)) {
-        res.send({
-            success : false, 
-            msg: "Authentication failed! Invalid user token."
-        });
-        return;
-    }
+    var task = req.body.task;
     
     task = utils.getObjectWithoutId(task);
     if (task.ProjectId) {

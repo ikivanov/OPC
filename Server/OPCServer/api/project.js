@@ -6,16 +6,7 @@ var user = require('./user');
 var ObjectID = require('mongodb').ObjectID;
 
 exports.create = function (req, res) {
-    var userToken = req.body.UserToken;
-    var project = req.body.Payload;
-
-    if (!user.isValidUserToken(userToken)) {
-        res.send({
-            success : false, 
-            msg: "Authentication failed! Invalid user token."
-        });
-        return;
-    }
+    var project = req.body.project;
 
     dalService.insert("projects", getObjectWithoutId(project), function (err, result) {
         var errMsg = "";
@@ -66,17 +57,8 @@ var getObjectWithoutId = function (object) {
 }
 
 exports.update = function (req, res) {
-    var userToken = req.body.UserToken;
-    var project = req.body.Payload;
+    var project = req.body.project;
     
-    if (!user.isValidUserToken(userToken)) {
-        res.send({
-            success : false, 
-            msg: "Authentication failed! Invalid user token."
-        });
-        return;
-    }
-
     dalService.update("projects", { _id: new ObjectID(project.Id) }, getObjectWithoutId(project), function (err, result) {
         if (err !== null) {
             res.send({
@@ -95,16 +77,7 @@ exports.update = function (req, res) {
 }
 
 exports.delete = function (req, res) {
-    var userToken = req.params.userToken;
     var projectId = req.params.id;
-
-    if (!user.isValidUserToken(userToken)) {
-        res.send({
-            success : false, 
-            msg: "Authentication failed! Invalid user token."
-        });
-        return;
-    }
 
     dalService.remove("projects", { _id: new ObjectID(projectId) }, function (err, numberOfRemovedDocs) {
         if (err !== null) {
@@ -124,16 +97,6 @@ exports.delete = function (req, res) {
 }
 
 exports.getAll = function (req, res) {
-    var userToken = req.params.userToken;
-
-    if (!user.isValidUserToken(userToken)) {
-        res.send({
-            success: false,
-            msg: "Authentication failed! Invalid user token."
-        });
-        return;
-    }
-    
     var select = dalService.select("projects");
     dalService.executeSelect(select, function (err, projects) {
         assert.equal(null, err);
@@ -162,16 +125,6 @@ exports.getAll = function (req, res) {
 }
 
 exports.getAllWithTasks = function (req, res) {
-    var userToken = req.params.userToken;
-    
-    if (!user.isValidUserToken(userToken)) {
-        res.send({
-            success: false,
-            msg: "Authentication failed! Invalid user token."
-        });
-        return;
-    }
-
     var select = dalService.select("projects").join(dalService.select("tasks"), "ProjectId", "Tasks");
     dalService.executeSelect(select, function (err, projects) {
         var results = [];
@@ -197,29 +150,7 @@ exports.getAllWithTasks = function (req, res) {
     });
 }
 
-exports.getById = function (req, res) {
-    var userToken = req.params.userToken;
-
-    if (!user.isValidUserToken(userToken)) {
-        res.send({
-            success: false,
-            msg: "Authentication failed! Invalid user token."
-        });
-        return;
-    }
-}
-
 exports.projectPlan = function (req, res) {
-    var userToken = req.params.userToken;
-    
-    if (!user.isValidUserToken(userToken)) {
-        res.send({
-            success: false,
-            msg: "Authentication failed! Invalid user token."
-        });
-        return;
-    }
-
     res.send({
         data: JSON.stringify(projectPlan),
         success: true,

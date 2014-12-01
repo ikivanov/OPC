@@ -1,6 +1,11 @@
 {
     "default": {
-        "db_name": "opc"
+        "db_name": "opc",
+        "memcached": { 
+            "host": "54.93.197.192:11211",
+            "key": "opc.sess",
+            "secret": "opcsessionsecret"
+        }
     },
 
     "development": {

@@ -1,22 +1,13 @@
 ﻿var crypto = require('crypto');
+var uuid = require('uuid');
 var dalService = require('../dal/dalService');
-
-var users = {};
-users["cbr"] = {username: "cbr", password: "123"};
-users["ikivanov"] = {username: "ikivanov", password: "123"};
 
 exports.list = function(req, res){
   res.send("respond with a resource");
 };
 
-var loggedUsers = {};
-
-exports.isValidUserToken = function (userToken) {
-    if (!userToken) {
-        return false;
-    }
-
-    return loggedUsers[userToken] !== undefined;
+function getSIDPrivateKey() {
+    return "sid" + uuid.v4() + "privatekey";
 }
 
 exports.login = function (req, res) {
@@ -35,14 +26,16 @@ exports.login = function (req, res) {
 
         if (results && results.length > 0) {
             var user = results[0];
-            var userToken = crypto.randomBytes(20).toString('hex');
-            var userId = user._id.toString();
-            loggedUsers[userToken] = userId;
+            
+            var sid = uuid.v4() + Number(new Date()) + getSIDPrivateKey();
+            req.session.regenerate(function () {
+                req.session.sid = crypto.createHash('sha256').update(sid).digest('hex');
                 
-            res.send({
-                success : true,
-                userToken: userToken,
-                msg : "OK",
+                res.send(
+                    {
+                        success : true,
+                        message: "Login successful!"
+                    });
             });
         } else {
             res.send({

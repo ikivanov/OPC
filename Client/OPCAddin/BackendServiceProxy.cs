@@ -18,8 +18,6 @@ namespace OPCAddin
 
     public class LoginResult
     {
-        public string UserToken { get; set; }
-
         public string Msg { get; set; }
 
         public bool Success { get; set; }
@@ -81,19 +79,17 @@ namespace OPCAddin
         public bool Success { get; set; }
     }
 
-    public class TransferObject<T>
-    {
-        public string UserToken { get; set; }
-        public T Payload { get; set; }
-    }
-
     public class BackendServiceProxy
     {
         private static readonly string serviceUrl = AddinModule.CurrentInstance.ServiceUrl;
 
         public static async Task<LoginResult> Login(Credentials credentials)
         {
-            using (var client = new HttpClient())
+            var cookies = new CookieContainer();
+            var handler = new HttpClientHandler();
+            handler.CookieContainer = cookies;
+
+            using (var client = new HttpClient(handler))
             {
                 client.BaseAddress = new Uri(serviceUrl);
                 client.DefaultRequestHeaders.Accept.Clear();
@@ -102,109 +98,126 @@ namespace OPCAddin
                 var response = await client.PostAsJsonAsync("/api/login", credentials);
                 response.EnsureSuccessStatusCode();
 
-                return await response.Content.ReadAsAsync <LoginResult>();
+                IEnumerable<Cookie> responseCookies = cookies.GetCookies(client.BaseAddress).Cast<Cookie>();
+                foreach (Cookie cookie in responseCookies)
+                {
+                    if (cookie.Name.Equals("opc.sess"))
+                    {
+                        SessionStore.GetInstance().SessionCookie = cookie;
+                        break;
+                    }
+                }
+
+                return await response.Content.ReadAsAsync<LoginResult>();
             }
         }
 
-        public static async Task<CreateProjectResult> CreateProject(string userToken, ProjectItem project)
+        public static async Task<CreateProjectResult> CreateProject(ProjectItem project)
         {
-            using (var client = new HttpClient())
+            var handler = SessionStore.GetInstance().GetHttpClientHandlerWithSID();
+            using (var client = new HttpClient(handler))
             {
                 client.BaseAddress = new Uri(serviceUrl);
                 client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-                var response = await client.PutAsJsonAsync("/api/project", new TransferObject<ProjectItem> { UserToken = userToken, Payload = project });
+                var response = await client.PutAsJsonAsync("/api/project", new { project = project});
                 response.EnsureSuccessStatusCode();
 
                 return await response.Content.ReadAsAsync<CreateProjectResult>();
             }
         }
 
-        public static async Task<CreateProjectResult> UpdateProject(string userToken, ProjectItem project)
+        public static async Task<CreateProjectResult> UpdateProject(ProjectItem project)
         {
-            using (var client = new HttpClient())
+            var handler = SessionStore.GetInstance().GetHttpClientHandlerWithSID();
+            using (var client = new HttpClient(handler))
             {
                 client.BaseAddress = new Uri(serviceUrl);
                 client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-                var response = await client.PostAsJsonAsync("/api/project", new TransferObject<ProjectItem> { UserToken = userToken, Payload = project });
+                var response = await client.PostAsJsonAsync("/api/project", new { project = project});
                 response.EnsureSuccessStatusCode();
 
                 return await response.Content.ReadAsAsync<CreateProjectResult>();
             }
         }
 
-        public static async Task<CreateProjectResult> DeleteProject(string userToken, ProjectItem project)
+        public static async Task<CreateProjectResult> DeleteProject(ProjectItem project)
         {
-            using (var client = new HttpClient())
+            var handler = SessionStore.GetInstance().GetHttpClientHandlerWithSID();
+            using (var client = new HttpClient(handler))
             {
                 client.BaseAddress = new Uri(serviceUrl);
                 client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-                var response = await client.DeleteAsync(string.Format("/api/{0}/project/{1}", userToken, project.Id));
+                var response = await client.DeleteAsync(string.Format("/api/project/{0}", project.Id));
                 response.EnsureSuccessStatusCode();
 
                 return await response.Content.ReadAsAsync<CreateProjectResult>();
             }
         }
 
-        public static async Task<CreateTaskResult> CreateTask(string userToken, TaskItem task)
+        public static async Task<CreateTaskResult> CreateTask(TaskItem task)
         {
-            using (var client = new HttpClient())
+            var handler = SessionStore.GetInstance().GetHttpClientHandlerWithSID();
+            using (var client = new HttpClient(handler))
             {
                 client.BaseAddress = new Uri(serviceUrl);
                 client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-                var response = await client.PutAsJsonAsync("/api/task", new TransferObject<TaskItem> { UserToken = userToken, Payload = task });
+                var response = await client.PutAsJsonAsync("/api/task", new {task = task});
                 response.EnsureSuccessStatusCode();
 
                 return await response.Content.ReadAsAsync<CreateTaskResult>();
             }
         }
 
-        public static async Task<GetAllProjectsResult> LookupProjects(string userToken)
+        public static async Task<GetAllProjectsResult> LookupProjects()
         {
-            using (var client = new HttpClient())
+            var handler = SessionStore.GetInstance().GetHttpClientHandlerWithSID();
+            using (var client = new HttpClient(handler))
             {
                 client.BaseAddress = new Uri(serviceUrl);
                 client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-                var response = await client.GetAsync(string.Format("/api/{0}/projects", userToken));
+                var response = await client.GetAsync("/api/projects");
                 response.EnsureSuccessStatusCode();
 
                 return await response.Content.ReadAsAsync<GetAllProjectsResult>();
             }
         }
 
-        public static async Task<GetAllProjectsResult> GetAllProjectsWithChildTasks(string userToken)
+        public static async Task<GetAllProjectsResult> GetAllProjectsWithChildTasks()
         {
-            using (var client = new HttpClient())
+            var handler = SessionStore.GetInstance().GetHttpClientHandlerWithSID();
+            using (var client = new HttpClient(handler))
             {
                 client.BaseAddress = new Uri(serviceUrl);
                 client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-                var response = await client.GetAsync(string.Format("/api/{0}/projectsWithTasks", userToken));
+                var response = await client.GetAsync("/api/projectsWithTasks");
                 response.EnsureSuccessStatusCode();
 
                 return await response.Content.ReadAsAsync<GetAllProjectsResult>();
             }
         }
 
-        public static async Task<ProjectPlanResult> GetProjectsPlan(string userToken)
+        public static async Task<ProjectPlanResult> GetProjectsPlan()
         {
-            using (var client = new HttpClient())
+            var handler = SessionStore.GetInstance().GetHttpClientHandlerWithSID();
+            using (var client = new HttpClient(handler))
             {
                 client.BaseAddress = new Uri(serviceUrl);
                 client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-                var response = await client.GetAsync(string.Format("/api/{0}/projectPlan", userToken));
+                var response = await client.GetAsync("/api/projectPlan");
                 response.EnsureSuccessStatusCode();
 
                 return await response.Content.ReadAsAsync<ProjectPlanResult>();

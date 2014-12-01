@@ -9,17 +9,8 @@ namespace OPCAddin
     public class LoginService
     {
         private static LoginService instance;
-        private string userToken;
 
         public event EventHandler LogedIn;
-
-        public string UserToken
-        {
-            get
-            {
-                return this.userToken;
-            }
-        }
 
         public static LoginService GetInstance()
         {
@@ -37,8 +28,6 @@ namespace OPCAddin
 
             if (result.Success)
             {
-                this.userToken = result.UserToken;
-
                 if (this.LogedIn != null)
                 {
                     this.LogedIn(this, EventArgs.Empty);
